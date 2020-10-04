@@ -1,0 +1,63 @@
+cask_args appdir: "/Applications"
+
+# brew tap
+tap "homebrew/cask-fonts"
+
+
+# mas install
+mas "1Blocker", id: 1107421413
+mas "Bear", id: 1091189122
+mas "Compressor", id: 424390742
+mas "Divvy", id: 413857545
+mas "Encrypto", id: 935235287
+mas "Fantastical", id: 975937182
+mas "Final Cut Pro", id: 424389933
+mas "Keynote", id: 409183694
+mas "LanScan", id: 472226235
+mas "Motion", id: 434290957
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Reeder", id: 880001334
+mas "ReadKit", id: 588726889
+mas "Remote Desktop", id: 409907375
+mas "Slack", id: 803453959
+mas "Sequel Ace", id: 1518036000
+mas "Twitter", id: 409789998
+mas "Type2Phone", id: 472717129
+mas "Visualizer", id: 1296177026
+mas "Xcode", id: 497799835
+
+
+# brew cask install
+cask "1password"
+cask "1password-cli"
+cask "alfred"
+cask "bettertouchtool"
+cask "cakebrew"
+cask "choosy"
+cask "dash"
+cask "discord"
+cask "firefox"
+cask "fluid"
+cask "google-chrome"
+cask "handbrake"
+cask "iterm2"
+cask "micro-snitch"
+cask "plex-media-player"
+cask "pluralsight"
+cask "postman"
+cask "sequel-pro"
+cask "steam"
+cask "transmit"
+cask "visual-studio-code"
+cask "vlc"
+cask "vmware-fusion"
+cask "wondershare-uniconverter"
+cask "zoomus"
+
+# brew install
+brew "git"
+brew "openssl@1.1"
+brew "node"
+brew "wget"
+brew "youtube-dl"

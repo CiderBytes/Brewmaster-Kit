@@ -14,6 +14,7 @@ mas "1Blocker", id: 1107421413
 mas "Bear", id: 1091189122
 mas "Compressor", id: 424390742
 mas "Divvy", id: 413857545
+mas "Disk Speed Test", id: 425264550
 mas "Fantastical", id: 975937182
 mas "Final Cut Pro", id: 424389933
 mas "Jira", id: 1475897096
@@ -93,24 +94,32 @@ cask "choosy"
 cask "dash"
 cask "discord"
 cask "firefox"
+cask "fission"
 cask "fluid"
 cask "google-chrome"
 cask "google-cloud-sdk"
 cask "handbrake"
 cask "iterm2"
+cask "insomnia"
 cask "linkliar"
 cask "lulu"
 cask "micro-snitch"
-cask "plex-media-player"
+cask "obs"
+cask "plex"
 cask "postman"
+cask "powershell"
 cask "provisionql"
 cask "qlcolorcode"
 cask "qlimagesize"
 cask "qlmarkdown"
 cask "quicklook-json"
 cask "sequel-pro"
+cask "signal"
+cask "sqleditor"
 cask "suspicious-package"
+cask "sublime-text"
 cask "steam"
+cask "tor-browser"
 cask "transmit"
 cask "visual-studio-code"
 cask "vlc"
@@ -122,9 +131,20 @@ cask "zoomus"
 
 #brew cask install - OPTIONAL
 
+#cask "chronosync"
+#cask "cocoarestclient"
+#cask "fantasy-grounds"
+#cask "openemu"
+#cask "mailplane"
+#cask "netspot"
+#cask "omniplan"
 #cask "paw"
+#cask "product-hunt"
 #cask "pluralsight"
 #cask "spotify"
+#cask "tableplus"
+#cask "trophy"
+
 
 
 
@@ -139,6 +159,7 @@ brew "mas"
 brew "node"
 # Manage multiple Node.js versions
 brew "nvm"
+brew "tldr"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # Manage compile and link flags for libraries
@@ -148,5 +169,3 @@ brew "tree"
 # Internet file retriever
 brew "wget"
 brew "youtube-dl"
-
-

@@ -22,6 +22,7 @@ echo "Please add this public key to Github \n"
 echo "https://github.com/account/ssh \n"
 read -p "Press [Enter] key after this..."
 
+pbcopy < ~/.ssh/id_rsa.pub
 echo "Your SSH key has been copied to your clipboard"
 
 echo "Setting gitignore file"

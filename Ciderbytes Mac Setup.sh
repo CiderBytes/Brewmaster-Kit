@@ -62,12 +62,12 @@ brew bundle install --file=~/Brewfile
 #Configures Homebrew completeion in zsh
 curl https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc > ~/.zshrc
 echo "Configuring Homebrew completeion in zsh"
-printf "if type brew &>/dev/null; then\n
+if type brew &>/dev/null; 
+then printf"
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH\n
-
   autoload -Uz compinit\n
-  compinit\n
-fi" >> ~/.zshrc
+  compinit\n"
+fi >> ~/.zshrc
 
 
 echo "Adding /usr/local/sbin to PATH"

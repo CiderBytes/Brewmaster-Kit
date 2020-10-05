@@ -85,6 +85,7 @@ curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 
 #Setting up with Dracula theme: https://draculatheme.com/zsh
 echo "Setting up Oh My Zsh theme..."
+mkdir ~/.oh-my-zsh/themes/lib/
 curl --output ~/.oh-my-zsh/themes/lib/async.zsh https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/lib/async.zsh
 curl --output ~/.oh-my-zsh/themes/dracula.zsh-theme https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/dracula.zsh-theme
 

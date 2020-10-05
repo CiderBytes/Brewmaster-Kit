@@ -5,7 +5,7 @@
 echo "Starting setup process…"
 
 #Update built-in apps
-softwareupdate -ia -verbose
+sudo softwareupdate -ia
 
 echo "Creating an SSH key for you..."
 read -p 'email address: ' emailaddress
@@ -83,9 +83,6 @@ brew doctor
 echo "Installing Oh My ZSH..."
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 
-echo "checking for ohmyzsh upgrade"
-upgrade_oh_my_zsh
-
 #Setting up with Dracula theme: https://draculatheme.com/zsh
 echo "Setting up Oh My Zsh theme..."
 curl --output ~/.oh-my-zsh/themes/lib/async.zsh https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/lib/async.zsh
@@ -100,6 +97,8 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 echo "Sourcing .zshrc file"
 source ~/.zshrc
 
+echo "checking for ohmyzsh upgrade"
+upgrade_oh_my_zsh
 
 echo "Github config"
 read -p 'Github username: ' githubuser
@@ -185,7 +184,7 @@ export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PA
 EOF
 
 
-echo "Mac setup complete"
+echo "Mac setup complete, it is recommeneded to restart your computer"
 
 
 #echo "Copying dotfiles from Github"

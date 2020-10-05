@@ -90,8 +90,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 echo "Sourcing .zshrc file"
 source ~/.zshrc
 
-echo "checking for ohmyzsh upgrade"
-omz update
+#Checking for update using omz won't work in this script as it's a zsh command
+#echo "checking for ohmyzsh upgrade"
+#omz update
 
 echo "Github config"
 read -p 'Github username: ' githubuser
@@ -177,7 +178,7 @@ export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PA
 EOF
 
 
-echo "Mac setup complete, it is recommeneded to restart your computer"
+echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n omz update"
 
 
 #echo "Copying dotfiles from Github"

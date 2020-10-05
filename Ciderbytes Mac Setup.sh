@@ -86,6 +86,8 @@ git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
+#Resolve “zsh compinit: insecure directories” error with Homebrew shell completion
+chmod -R go-w "$(brew --prefix)/share"
 
 echo "Sourcing .zshrc file"
 source ~/.zshrc

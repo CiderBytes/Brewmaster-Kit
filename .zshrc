@@ -1,105 +1,124 @@
-#!/usr/bin/env bash
-# Setup script for new Mac
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 
-echo "Starting setup process…"
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
-#Update built-in apps
-softwareupdate -ia -verbose
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="dracula"
 
-echo "Creating an SSH key for you..."
-ssh-keygen -t rsa
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-echo "Please add this public key to Github \n"
-echo "https://github.com/account/ssh \n"
-read -p "Press [Enter] key after this..."
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-#Intall xcode CLI
-sudo xcode-select --install
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-#Accept the Xcode license
-sudo xcodebuild -license accept
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+
+plugins=(
+	git
+	brew
+	osx
+	bgnotify
+	web-search
+	zsh-nvm
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# brew update && brew outdated && brew upgrade
+alias buou="brew update && brew outdated && brew upgrade && brew cleanup"
+alias zshconfig="nano ~/.zshrc"
+alias ohmyzsh="nano ~/.oh-my-zsh"
 
 
-# Check for Homebrew to be present, install if it's missing
-if test ! $(which brew); then
-    echo "Installing homebrew..."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-fi
 
-# Update homebrew recipes
-echo "Updating Homebrew"
-brew update
-
-brew install mas
-
-#read -p 'AppleID: ' uservar
-#read -sp 'Password: ' passvar 
-#mas signin $uservar $passvar
-
-curl --output ~/Brewfile https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/brewfile
-echo "Brewfile downloaded"
-
-echo "Installing from Brewfile"
-brew bundle install --file=~/Brewfile
-
-#Configures Homebrew completeion in zsh
-curl https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc > ~/.zshrc
-echo "Configuring Homebrew completeion in zsh"
-printf "if type brew &>/dev/null; then\n
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH\n
-
-  autoload -Uz compinit\n
-  compinit\n
-fi" >> ~/.zshrc
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-echo "Adding /usr/local/sbin to PATH"
-echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.zshrc
-
-echo "Cleaning up brew"
-brew cleanup
-
-echo "Running Brew Doctor"
-brew doctor
-
-#Install Zsh & Oh My Zsh
-echo "Installing Oh My ZSH..."
-curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
-
-echo "checking for ohmyzsh upgrade"
-upgrade_oh_my_zsh
-
-#Setting up with Dracula theme: https://draculatheme.com/zsh
-echo "Setting up Oh My Zsh theme..."
-curl --output ~/.oh-my-zsh/themes/lib/async.zsh https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/lib/async.zsh
-curl --output ~/.oh-my-zsh/themes/dracula.zsh-theme https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/dracula.zsh-theme
-
-echo "Setting up Zsh plugins..."
-git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-
-
-echo "Sourcing .zshrc file"
-source ~/.zshrc
-
-
-echo "Github config"
-read -p 'Github username: ' githubuser
-read -p 'Github user email: ' githubuseremail
-
-git config --global user.name $githubuser
-git config --global user.email $githubuseremail
-
-
-
-
-echo "Mac setup complete"
-
-
-#echo "Copying dotfiles from Github"
-#cd ~
-#git clone git@github.com:bradp/dotfiles.git .dotfiles
-#cd .dotfiles
-#sh symdotfiles
+export PATH="/usr/local/sbin:$PATH"

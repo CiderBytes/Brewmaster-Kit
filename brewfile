@@ -154,11 +154,21 @@ cask "zoomus"
 # brew install - BASE
 
 # Faster search replacement for grep
-brea "ack"
+brew "ack"
+#cat with syntax highlighting
+brew "bat"
 # Distributed revision control system
 brew "git"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
+#CLI GUI Process Manager
+brew "htop"
+#command line HTTP client for APIs
+brew "httpie"
+#CLI GUI for Git
+brew "lazygit"
+#CLI Logviewer
+brew "lnav"
 # Mac App Store command-line interface
 brew "mas"
 brew "node"

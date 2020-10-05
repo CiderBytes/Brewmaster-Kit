@@ -18,8 +18,8 @@ printf "Host *\n
 ssh-add -K ~/.ssh/id_rsa
 
 
-echo "Please add this public key to Github \n"
-echo "https://github.com/account/ssh \n"
+echo -e "Please add this public key to Github \n"
+echo -e "https://github.com/account/ssh \n"
 read -p "Press [Enter] key after this..."
 
 pbcopy < ~/.ssh/id_rsa.pub

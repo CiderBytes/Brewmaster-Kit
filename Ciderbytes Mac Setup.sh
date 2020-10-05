@@ -8,11 +8,26 @@ echo "Starting setup process…"
 softwareupdate -ia -verbose
 
 echo "Creating an SSH key for you..."
-ssh-keygen -t rsa
+read -p 'email address: ' emailaddress
+ssh-keygen -t rsa -C $emailaddress
+eval "$(ssh-agent -s)"
+printf "Host *\n
+  AddKeysToAgent yes\n
+  UseKeychain yes\n
+  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+ssh-add -K ~/.ssh/id_rsa
+
 
 echo "Please add this public key to Github \n"
 echo "https://github.com/account/ssh \n"
 read -p "Press [Enter] key after this..."
+
+echo "Your SSH key has been copied to your clipboard"
+
+echo "Setting gitignore file"
+curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
+git config --global core.excludesfile ~/.gitignore
+
 
 #Intall xcode CLI
 sudo xcode-select --install
@@ -91,8 +106,82 @@ read -p 'Github user email: ' githubuseremail
 
 git config --global user.name $githubuser
 git config --global user.email $githubuseremail
+git config --global credential.helper osxkeychain
 
 
+echo "Configuring Mac Preferences"
+
+#Allow text in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool TRUE
+
+#"Use column view in all Finder windows by default"
+defaults write com.apple.finder FXPreferredViewStyle Clmv
+
+#"Setting Dock to auto-hide and removing the auto-hiding delay"
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+#"Disable the sudden motion sensor as its not useful for SSDs"
+sudo pmset -a sms 0
+
+#"Disable annoying backswipe in Chrome"
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+
+#"Setting screenshot format to PNG"
+defaults write com.apple.screencapture type -string "png"
+
+#"Enabling Safari's debug menu"
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+#"Allow hitting the Backspace key to go to the previous page in history"
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+
+#"Enabling the Develop menu and the Web Inspector in Safari"
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
+
+#"Adding a context menu item for showing the Web Inspector in web views"
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+#Set Sublime Text to open as editor from CLI
+ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
+
+#Send Screenshots to Screenshots folder on Desktop
+mkdir -p ~/Desktop/Screenshots
+defaults write com.apple.screencapture location ~/Desktop/Screenshots && killall SystemUIServer
+
+#"Setting screenshots location to ~/Desktop"
+#defaults write com.apple.screencapture location -string "$HOME/Desktop"
+
+
+#"Disabling OS X Gate Keeper"
+#"(You'll be able to install any app you want from here on, not just Mac App Store apps)"
+#sudo spctl --master-disable
+#sudo defaults write /var/db/SystemPolicy-prefs.plist enabled -string no
+#defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+#"Saving to disk (not to iCloud) by default"
+#defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+#"Disable smart quotes and smart dashes as they are annoying when typing code"
+#defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+#defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+#"Showing all filename extensions in Finder by default"
+#defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+#"Disabling the warning when changing a file extension"
+#defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+killall Finder
+
+#Add VSCode to Path
+cat << EOF >> ~/.zshrc
+# Add Visual Studio Code (code)
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+EOF
 
 
 echo "Mac setup complete"

@@ -169,3 +169,4 @@ brew "tree"
 # Internet file retriever
 brew "wget"
 brew "youtube-dl"
+brew "zsh"

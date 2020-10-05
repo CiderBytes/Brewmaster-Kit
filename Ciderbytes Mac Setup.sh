@@ -98,7 +98,7 @@ echo "Sourcing .zshrc file"
 source ~/.zshrc
 
 echo "checking for ohmyzsh upgrade"
-upgrade_oh_my_zsh
+omz update
 
 echo "Github config"
 read -p 'Github username: ' githubuser

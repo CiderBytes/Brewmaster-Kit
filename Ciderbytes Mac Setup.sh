@@ -59,16 +59,8 @@ echo "Brewfile downloaded"
 echo "Installing from Brewfile"
 brew bundle install --file=~/Brewfile
 
-#Configures Homebrew completeion in zsh
+#Copying .zshrc in place
 curl https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc > ~/.zshrc
-echo "Configuring Homebrew completeion in zsh"
-if type brew &>/dev/null; 
-then printf"
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH\n
-  autoload -Uz compinit\n
-  compinit\n"
-fi >> ~/.zshrc
-
 
 echo "Adding /usr/local/sbin to PATH"
 echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.zshrc

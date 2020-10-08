@@ -19,11 +19,12 @@ ssh-add -K ~/.ssh/id_rsa
 
 
 echo -e "Please add this public key to Github \n"
-echo -e "https://github.com/account/ssh \n"
+echo -e "\e[1;34m https://github.com/account/ssh \n\e[0m"
+open "https://github.com/account/ssh"
+pbcopy < ~/.ssh/id_rsa.pub
+echo "\e[1;31m Your SSH key has been copied to your clipboard\e[0m"
 read -p "Press [Enter] key after this..."
 
-pbcopy < ~/.ssh/id_rsa.pub
-echo "Your SSH key has been copied to your clipboard"
 
 echo "Setting gitignore file"
 curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
@@ -180,7 +181,7 @@ export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PA
 EOF
 
 
-echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n omz update"
+echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n \e[1;31m omz update \e[1;0m"
 
 
 #echo "Copying dotfiles from Github"

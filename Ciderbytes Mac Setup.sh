@@ -30,6 +30,8 @@ echo "Setting gitignore file"
 curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
 git config --global core.excludesfile ~/.gitignore
 
+echo "Configure Git to ensure line endings in files you checkout are correct for OS X"
+git config --global core.autocrlf input
 
 #Intall xcode CLI
 sudo xcode-select --install
@@ -93,7 +95,7 @@ chmod -R go-w "$(brew --prefix)/share"
 echo "Sourcing .zshrc file"
 source ~/.zshrc
 
-#Checking for update using omz won't work in this script as it's a zsh command
+##Checking for update using omz won't work in this script as it's a zsh command
 #echo "checking for ohmyzsh upgrade"
 #omz update
 
@@ -105,6 +107,15 @@ git config --global user.name $githubuser
 git config --global user.email $githubuseremail
 git config --global credential.helper osxkeychain
 
+###Set default text editor for Git
+##Atom
+#git config --global core.editor "atom --wait"
+##TextMate
+#git config --global core.editor "mate -w"
+##Sublime
+#git config --global core.editor "subl -n -w"
+##VSCode
+git config --global core.editor "code --wait"
 
 echo "Configuring Mac Preferences"
 

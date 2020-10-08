@@ -75,10 +75,12 @@ ZSH_THEME="dracula"
 
 plugins=(
 	git
+	bgnotify
 	brew
 	osx
-	bgnotify
+	sublime
 	web-search
+	z
 	zsh-nvm
 	zsh-autosuggestions
 	zsh-syntax-highlighting
@@ -90,6 +92,8 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit
 fi
+
+. ~/.oh-my-zsh/custom/plugins/z-master/z.sh
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,6 +127,8 @@ source $ZSH/oh-my-zsh.sh
 alias buou="brew update && brew outdated && brew upgrade && brew cleanup"
 alias zshconfig="nano ~/.zshrc"
 alias ohmyzsh="nano ~/.oh-my-zsh"
+
+
 
 
 

@@ -151,7 +151,7 @@ cask "zoomus"
 
 
 
-# brew install - BASE
+## brew install - BASE
 
 # Faster search replacement for grep
 brew "ack"
@@ -175,6 +175,8 @@ brew "node"
 # Manage multiple Node.js versions
 brew "nvm"
 brew "tldr"
+#Fast complete searches of codebase and folders (ag)
+brew "the_silver_searcher"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # Manage compile and link flags for libraries

@@ -50,8 +50,11 @@ fi
 echo "Updating Homebrew"
 brew update
 
+#Install MAS
+echo "Installing MAS"
 brew install mas
 
+#Following MAS settings not currently supported
 #read -p 'AppleID: ' uservar
 #read -sp 'Password: ' passvar 
 #mas signin $uservar $passvar

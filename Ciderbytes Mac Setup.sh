@@ -19,10 +19,10 @@ ssh-add -K ~/.ssh/id_rsa
 
 
 echo -e "Please add this public key to Github \n"
-echo -e "\e[1;34m https://github.com/account/ssh \n\e[0m"
+echo -e "\033[1;34m https://github.com/account/ssh \n\033[0m"
 open "https://github.com/account/ssh"
 pbcopy < ~/.ssh/id_rsa.pub
-echo "\e[1;31m Your SSH key has been copied to your clipboard\e[0m"
+echo "\033[1;31m Your SSH key has been copied to your clipboard\033[0m"
 read -p "Press [Enter] key after this..."
 
 
@@ -204,7 +204,7 @@ EOF
 #Edit Visual Studio Code terminal font by going to Settings -> terminal.integrated.fontFamily and set to "MesloLGS NF"
 #Set iTerm2 font to "MesloLGS NF"
 
-echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n \e[1;31m omz update \e[1;0m"
+echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n \033[1;31m omz update \033[1;0m"
 
 
 #echo "Copying dotfiles from Github"

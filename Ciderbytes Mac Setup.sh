@@ -59,6 +59,10 @@ brew install mas
 #read -sp 'Password: ' passvar 
 #mas signin $uservar $passvar
 
+#Copy powerlevel10k config file in place
+curl --output ~/.p10k.zsh https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.p10k.zsh
+echo "p10k.zsh downloaded"
+
 curl --output ~/Brewfile https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/brewfile
 echo "Brewfile downloaded"
 
@@ -82,16 +86,18 @@ echo "Installing Oh My ZSH..."
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 
 #Setting up with Dracula theme: https://draculatheme.com/zsh
-echo "Setting up Oh My Zsh theme..."
-mkdir ~/.oh-my-zsh/themes/lib/
-curl --output ~/.oh-my-zsh/themes/lib/async.zsh https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/lib/async.zsh
-curl --output ~/.oh-my-zsh/themes/dracula.zsh-theme https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/dracula.zsh-theme
+#echo "Setting up Oh My Zsh theme..."
+#mkdir ~/.oh-my-zsh/themes/lib/
+#curl --output ~/.oh-my-zsh/themes/lib/async.zsh https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/lib/async.zsh
+#curl --output ~/.oh-my-zsh/themes/dracula.zsh-theme https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/dracula.zsh-theme
 
 echo "Setting up Zsh plugins..."
 git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/rupa/z.git ~/.oh-my-zsh/custom/plugins/
+#MOVED TO HOMEBREW:
+#git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
 
 #Resolve “zsh compinit: insecure directories” error with Homebrew shell completion
 chmod -R go-w "$(brew --prefix)/share"
@@ -195,6 +201,8 @@ cat << EOF >> ~/.zshrc
 export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 EOF
 
+#Edit Visual Studio Code terminal font by going to Settings -> terminal.integrated.fontFamily and set to "MesloLGS NF"
+#Set iTerm2 font to "MesloLGS NF"
 
 echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n \e[1;31m omz update \e[1;0m"
 

@@ -2,8 +2,8 @@ cask_args appdir: "/Applications"
 
 # brew tap
 tap "homebrew/cask-fonts"
-tap "homebrew/bundle"
 tap "homebrew/cask"
+tap "homebrew/bundle"
 tap "homebrew/core"
 tap "homebrew/services"
 
@@ -84,6 +84,9 @@ mas "Xcode", id: 497799835
 
 
 # brew cask install - BASE
+
+cask "font-hack-nerd-font"
+cask "font-meslo-lg-nerd-font"
 
 cask "1password"
 cask "1password-cli"
@@ -174,6 +177,8 @@ brew "mas"
 brew "node"
 # Manage multiple Node.js versions
 brew "nvm"
+#PowerLevel10k
+brew "PowerLevel10k"
 brew "tldr"
 #Fast complete searches of codebase and folders (ag)
 brew "the_silver_searcher"
@@ -187,3 +192,6 @@ brew "tree"
 brew "wget"
 brew "youtube-dl"
 brew "zsh"
+
+##zsh plugins
+brew "zsh-syntax-highlighting"

@@ -5,7 +5,7 @@
 echo "Starting setup process…"
 
 #Update built-in apps
-sudo softwareupdate -ia
+sudo softwareupdate -ia --verbose
 
 echo "Creating an SSH key for you..."
 read -p 'email address: ' emailaddress

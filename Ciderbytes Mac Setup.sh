@@ -22,7 +22,7 @@ echo -e "Please add this public key to Github \n"
 echo -e "\033[1;34m https://github.com/account/ssh \n\033[0m"
 open "https://github.com/account/ssh"
 pbcopy < ~/.ssh/id_rsa.pub
-echo "\033[1;31m Your SSH key has been copied to your clipboard\033[0m"
+echo -e "\033[1;31m Your SSH key has been copied to your clipboard\033[0m"
 read -p "Press [Enter] key after this..."
 
 

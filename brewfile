@@ -174,11 +174,13 @@ brew "lazygit"
 brew "lnav"
 # Mac App Store command-line interface
 brew "mas"
+#neofetch startup asci
+brew "neofetch"
 brew "node"
 # Manage multiple Node.js versions
 brew "nvm"
 #PowerLevel10k
-brew "PowerLevel10k"
+brew "romkatv/powerlevel10k/powerlevel10k"
 brew "tldr"
 #Fast complete searches of codebase and folders (ag)
 brew "the_silver_searcher"

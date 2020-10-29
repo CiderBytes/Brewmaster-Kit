@@ -81,7 +81,7 @@ brew bundle install --file=~/Brewfile
 curl https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc > ~/.zshrc
 
 echo "Adding /usr/local/sbin to PATH"
-echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.zshrc
+echo "export PATH="/usr/local/sbin:$PATH"" >> ~/.zshrc
 
 echo "Cleaning up brew"
 brew cleanup

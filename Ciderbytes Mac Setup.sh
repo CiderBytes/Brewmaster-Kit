@@ -33,8 +33,12 @@ git config --global core.excludesfile ~/.gitignore
 echo "Configure Git to ensure line endings in files you checkout are correct for OS X"
 git config --global core.autocrlf input
 
+if test ! $(which xcode-select); then
 #Intall xcode CLI
+echo "Installing Xcode CLI"
 sudo xcode-select --install
+fi
+
 
 # Check for Homebrew to be present, install if it's missing
 if test ! $(which brew); then

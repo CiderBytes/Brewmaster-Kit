@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Setup script for new Mac
-
+#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/Ciderbytes%20Mac%20Setup.sh)"
 
 echo "Starting setup process…"
 
@@ -36,16 +36,11 @@ git config --global core.autocrlf input
 #Intall xcode CLI
 sudo xcode-select --install
 
-#Accept the Xcode license
-sudo xcodebuild -license accept
-
-
 # Check for Homebrew to be present, install if it's missing
 if test ! $(which brew); then
     echo "Installing homebrew..."
     #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
 fi
 
 # Update homebrew recipes
@@ -60,6 +55,17 @@ brew install mas
 #read -p 'AppleID: ' uservar
 #read -sp 'Password: ' passvar 
 #mas signin $uservar $passvar
+
+#Check for Xcodebuild install
+if test ! $(which xcodebuild); then
+  #Install Xcode
+  echo "Installing Xcode"
+  mas install 497799835
+  echo "Xcode Install Complete"
+  #Accept the Xcode license
+  sudo xcodebuild -license accept
+fi
+
 
 #Copy powerlevel10k config file in place
 curl --output ~/.p10k.zsh https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.p10k.zsh
@@ -206,7 +212,7 @@ EOF
 #Edit Visual Studio Code terminal font by going to Settings -> terminal.integrated.fontFamily and set to "MesloLGS NF"
 #Set iTerm2 font to "MesloLGS NF"
 
-echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh with the following command and then restarting your computer:\n \033[1;31m omz update \033[1;0m"
+echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh in a new terminal window with the following command and then restarting your computer:\n \033[1;31m omz update \033[1;0m"
 
 
 #echo "Copying dotfiles from Github"

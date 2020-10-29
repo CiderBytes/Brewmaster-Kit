@@ -32,7 +32,7 @@ mas "Slack", id: 803453959
 mas "The Unarchiver", id: 425424353
 mas "Twitter", id: 409789998
 mas "Type2Phone", id: 472717129
-mas "Xcode", id: 497799835
+
 
 
 #mas install - OPTIONAL
@@ -80,6 +80,7 @@ mas "Xcode", id: 497799835
 #mas "WiFi Explorer", id: 494803304
 #mas "Wipr", id: 1320666476
 #mas "WorldCard", id: 1012314348
+#mas "Xcode", id: 497799835
 
 
 

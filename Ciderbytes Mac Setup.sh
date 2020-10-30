@@ -51,6 +51,9 @@ fi
 echo "Updating Homebrew"
 brew update
 
+echo "Upgrading Homebrew installs"
+brew upgrade
+
 #Install MAS
 echo "Installing MAS"
 brew install mas
@@ -82,10 +85,11 @@ echo "Installing from Brewfile"
 brew bundle install --file=~/Brewfile
 
 #Copying .zshrc in place
+mv ~/.zshrc ~/.zshrc.bak
 curl https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc > ~/.zshrc
 
 echo "Adding /usr/local/sbin to PATH"
-echo "export PATH="/usr/local/sbin:$PATH"" >> ~/.zshrc
+export PATH="/usr/local/sbin:$PATH"
 
 echo "Cleaning up brew"
 brew cleanup
@@ -104,9 +108,38 @@ curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 #curl --output ~/.oh-my-zsh/themes/dracula.zsh-theme https://raw.githubusercontent.com/dracula/zsh/44e7b24cc9b102ccdbc2fab277dda5b103a5189c/dracula.zsh-theme
 
 echo "Setting up Zsh plugins..."
+
+if [ ! -d ~/.oh-my-zsh/custom/plugins/zsh-nvm ];
+  then
 git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+  else 
+  echo "zsh-nvm already installed"
+fi
+
+if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ];
+  then 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+else 
+  echo "zsh-autosuggestions already installed"
+fi
+
+if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/z-master ];
+  then
 git clone https://github.com/rupa/z.git ~/.oh-my-zsh/custom/plugins/z-master
+else 
+  echo "z or (aka z-master) already installed"
+fi
+
+printf "\n${BLUE}%s${RESET}\n" "Updating custom plugins"
+cd ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/
+
+for plugin in */; do
+  if [ -d "$plugin/.git" ]; then
+     printf "${YELLOW}%s${RESET}\n" "${plugin%/}"
+     git -C "$plugin" pull
+  fi
+done
+
 #MOVED TO HOMEBREW:
 #git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
@@ -217,7 +250,6 @@ EOF
 #Set iTerm2 font to "MesloLGS NF"
 
 echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh in a new terminal window with the following command and then restarting your computer:\n \033[1;31m omz update \033[1;0m"
-
 
 #echo "Copying dotfiles from Github"
 #cd ~

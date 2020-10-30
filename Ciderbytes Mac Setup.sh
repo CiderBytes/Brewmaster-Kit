@@ -95,11 +95,12 @@ curl https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc >
 echo "Adding /usr/local/sbin to PATH"
 export PATH="/usr/local/sbin:$PATH"
 
+echo "Running Brew Doctor"
+brew doctor
+
 echo "Cleaning up brew"
 brew cleanup
 
-echo "Running Brew Doctor"
-brew doctor
 
 #Install Zsh & Oh My Zsh
 echo "Installing Oh My ZSH..."

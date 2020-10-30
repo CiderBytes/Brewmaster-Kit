@@ -4,6 +4,10 @@
 
 echo "Starting setup process…"
 
+echo -e "\033[1;31m Sign into the App Store before proceeding\n\033[0m"
+open -a /System/Applications/App\ Store.app
+read -p $'\e[1;31mPress [Enter] key after this...\e[0m'
+
 #Update built-in apps
 sudo softwareupdate -ia --verbose
 
@@ -23,7 +27,7 @@ echo -e "\033[1;34m https://github.com/account/ssh \n\033[0m"
 open "https://github.com/account/ssh"
 pbcopy < ~/.ssh/id_rsa.pub
 echo -e "\033[1;31m Your SSH key has been copied to your clipboard\033[0m"
-read -p "Press [Enter] key after this..."
+read -p $'\e[1;31mPress [Enter] key after this...\e[0m'
 
 
 echo "Setting gitignore file"

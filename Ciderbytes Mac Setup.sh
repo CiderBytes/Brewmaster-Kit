@@ -11,9 +11,6 @@ read -p $'\e[1;31mPress [Enter] key after this...\e[0m'
 #Update built-in apps
 sudo softwareupdate -ia --verbose
 
-
-#!/usr/bin/env bash
-
 read -n1 -p "Generate SSH Key? [y] `echo $'\n> '`" doit 
 case $doit in  
   y|Y) 

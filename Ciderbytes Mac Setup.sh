@@ -14,15 +14,15 @@ sudo softwareupdate -ia --verbose
 read -n1 -p "Generate SSH Key? [y] `echo $'\n> '`" doit 
 case $doit in  
   y|Y) 
-echo -e "\n Creating an SSH key for you..."
-read -p 'email address: ' emailaddress
-ssh-keygen -t rsa -C $emailaddress
-eval "$(ssh-agent -s)"
-printf "Host *\n
-  AddKeysToAgent yes\n
-  UseKeychain yes\n
-  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
-ssh-add -K ~/.ssh/id_rsa;;
+  echo -e "\n Creating an SSH key for you..."
+  read -p 'email address: ' emailaddress
+  ssh-keygen -t rsa -C $emailaddress
+  eval "$(ssh-agent -s)"
+  printf "Host *\n
+    AddKeysToAgent yes\n
+    UseKeychain yes\n
+    IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+  ssh-add -K ~/.ssh/id_rsa;;
 *) 
 echo -e "\n Skipping SSH key creation \n"
 esac 

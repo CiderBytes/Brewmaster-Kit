@@ -11,7 +11,13 @@ read -p $'\e[1;31mPress [Enter] key after this...\e[0m'
 #Update built-in apps
 sudo softwareupdate -ia --verbose
 
-echo "Creating an SSH key for you..."
+
+#!/usr/bin/env bash
+
+read -n1 -p "Generate SSH Key? [y] `echo $'\n> '`" doit 
+case $doit in  
+  y|Y) 
+echo -e "\n Creating an SSH key for you..."
 read -p 'email address: ' emailaddress
 ssh-keygen -t rsa -C $emailaddress
 eval "$(ssh-agent -s)"
@@ -19,10 +25,12 @@ printf "Host *\n
   AddKeysToAgent yes\n
   UseKeychain yes\n
   IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
-ssh-add -K ~/.ssh/id_rsa
+ssh-add -K ~/.ssh/id_rsa;;
+*) 
+echo -e "\n Skipping SSH key creation \n"
+esac 
 
-
-echo -e "Please add this public key to Github \n"
+echo -e "Please add public key to Github \n"
 echo -e "\033[1;34m https://github.com/account/ssh \n\033[0m"
 open "https://github.com/account/ssh"
 pbcopy < ~/.ssh/id_rsa.pub
@@ -38,9 +46,9 @@ echo "Configure Git to ensure line endings in files you checkout are correct for
 git config --global core.autocrlf input
 
 if test ! $(which xcode-select); then
-#Intall xcode CLI
-echo "Installing Xcode CLI"
-sudo xcode-select --install
+  #Intall xcode CLI
+  echo "Installing Xcode CLI"
+  sudo xcode-select --install
 fi
 
 
@@ -116,22 +124,22 @@ echo "Setting up Zsh plugins..."
 
 if [ ! -d ~/.oh-my-zsh/custom/plugins/zsh-nvm ];
   then
-git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+  git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
   else 
   echo "zsh-nvm already installed"
 fi
 
 if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ];
   then 
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-else 
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  else 
   echo "zsh-autosuggestions already installed"
 fi
 
 if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/z-master ];
   then
-git clone https://github.com/rupa/z.git ~/.oh-my-zsh/custom/plugins/z-master
-else 
+  git clone https://github.com/rupa/z.git ~/.oh-my-zsh/custom/plugins/z-master
+  else 
   echo "z or (aka z-master) already installed"
 fi
 

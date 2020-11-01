@@ -27,7 +27,7 @@ case $doit in
     IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
   ssh-add -K ~/.ssh/id_rsa;;
 *) 
-echo -e "\n Skipping SSH key creation \n"
+echo -e "\n Skipping SSH key creation \n";;
 esac 
 
 echo -e "Please add public key to Github \n"

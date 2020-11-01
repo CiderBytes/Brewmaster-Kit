@@ -2,6 +2,9 @@
 # Setup script for new Mac
 #/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/Ciderbytes%20Mac%20Setup.sh)"
 
+echo "Grant sudo access upfront"
+sudo -v
+
 echo "Starting setup process…"
 
 echo -e "\033[1;31m Sign into the App Store before proceeding\n\033[0m"
@@ -42,11 +45,13 @@ git config --global core.excludesfile ~/.gitignore
 echo "Configure Git to ensure line endings in files you checkout are correct for OS X"
 git config --global core.autocrlf input
 
-if test ! $(which xcode-select); then
+##Check for Xcode CLI and install if not present
+##Commented out as Homebrew will install when first run
+#if test ! $(which xcode-select); then
   #Intall xcode CLI
-  echo "Installing Xcode CLI"
-  sudo xcode-select --install
-fi
+#  echo "Installing Xcode CLI"
+#  sudo xcode-select --install
+#fi
 
 
 # Check for Homebrew to be present, install if it's missing
@@ -228,6 +233,13 @@ defaults write com.apple.screencapture location ~/Desktop/Screenshots && killall
 #"Setting screenshots location to ~/Desktop"
 #defaults write com.apple.screencapture location -string "$HOME/Desktop"
 
+# Enable Safari’s debug menu
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+# Enable the Develop menu and the Web Inspector in Safari
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
 
 #"Disabling OS X Gate Keeper"
 #"(You'll be able to install any app you want from here on, not just Mac App Store apps)"

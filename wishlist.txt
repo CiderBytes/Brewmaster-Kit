@@ -1,0 +1,3 @@
+#Install Clasp
+#Install Type Defitions for auto complete Type Script in Apps Script dev. (npm i -S @types/google-apps-script)
+

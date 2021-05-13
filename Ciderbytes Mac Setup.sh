@@ -150,7 +150,7 @@ brew cleanup
 
 #Install Zsh & Oh My Zsh
 echo "Installing Oh My ZSH..."
-curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -c
 
 
 #Setting up with Dracula theme: https://draculatheme.com/zsh

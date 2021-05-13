@@ -18,20 +18,24 @@ mas "Disk Speed Test", id: 425264550
 mas "Evernote Web Clipper", id: 1481669779
 mas "Fantastical", id: 975937182
 mas "Final Cut Pro", id: 424389933
+mas "Gifox", id: 1082624744
 mas "Jira", id: 1475897096
 mas "Keynote", id: 409183694
 mas "Mactracker", id: 430255202
 mas "Motion", id: 434290957
 mas "Numbers", id: 409203825
+mas "OmniGraffle", id: 1142578753
 mas "Pages", id: 409201541
 mas "Reeder", id: 880001334
 mas "ReadKit", id: 588726889
 mas "Remote Desktop", id: 409907375
 mas "Sequel Ace", id: 1518036000
 mas "Slack", id: 803453959
+mas "SSH Copy", id: 823961613
 mas "The Unarchiver", id: 425424353
 mas "Twitter", id: 409789998
 mas "Type2Phone", id: 472717129
+mas "WiFi Explorer", id: 494803304
 
 
 
@@ -40,6 +44,7 @@ mas "Type2Phone", id: 472717129
 #mas "Bee", id: 726099620
 #mas "Bridge Constructor Portal", id: 1316061122
 #mas "CamControl", id: 1503271162
+#mas "Core Tunnel", id: 1354318707
 #mas "Dark Reader for Safari", id: 1438243180
 #mas "Decked Builder Lite", id: 406317734
 #mas "Display Menu", id: 549083868
@@ -49,7 +54,7 @@ mas "Type2Phone", id: 472717129
 #mas "Geekbench 4", id: 1175706108
 #mas "Geekbench 5", id: 1478447657
 #mas "GIF Keyboard", id: 1043270657
-#mas "Gifox", id: 1082624744
+
 #mas "GIPHY CAPTURE", id: 668208984
 #mas "iHosts", id: 1102004240
 #mas "Image2icon", id: 992115977
@@ -63,7 +68,7 @@ mas "Type2Phone", id: 472717129
 #mas "Monosnap", id: 540348655
 #mas "Network Logger Pro", id: 764324406
 #mas "Network Speed Tester", id: 1217419133
-#mas "OmniGraffle", id: 1142578753
+
 #mas "Playgrounds", id: 1496833156
 #mas "Pocket", id: 568494494
 #mas "QVR Client", id: 806101067
@@ -71,13 +76,12 @@ mas "Type2Phone", id: 472717129
 #mas "Server", id: 883878097
 #mas "SnipperApp 2", id: 1469182443
 #mas "Speedtest", id: 1153157709
-#mas "SSH Copy", id: 823961613
+
 #mas "SSH Tunnel", id: 734418810
 #mas "ToothFairy", id: 1191449274
 #mas "Twitter", id: 409789998
 #mas "Visualizer", id: 1296177026
 #mas "Webcam Settings", id: 533696630
-#mas "WiFi Explorer", id: 494803304
 #mas "Wipr", id: 1320666476
 #mas "WorldCard", id: 1012314348
 #mas "Xcode", id: 497799835
@@ -92,10 +96,8 @@ cask "font-meslo-lg-nerd-font"
 cask "1password"
 cask "1password-cli"
 cask "alfred"
-cask "bettertouchtool"
 cask "betterzip"
 cask "cakebrew"
-cask "cheatsheet"
 cask "choosy"
 cask "dash"
 cask "discord"
@@ -108,7 +110,6 @@ cask "handbrake"
 cask "iterm2"
 cask "insomnia"
 cask "linkliar"
-cask "lulu"
 cask "micro-snitch"
 cask "obs"
 cask "plex"
@@ -127,30 +128,33 @@ cask "sublime-text"
 cask "steam"
 cask "tor-browser"
 cask "transmit"
-cask "valentina-studio"
 cask "visual-studio-code"
 cask "vlc"
 cask "vmware-fusion"
 cask "wondershare-uniconverter"
-cask "zoomus"
+cask "zoom"
 
 
 
 #brew cask install - OPTIONAL
 
+#cask "bettertouchtool"
+#cask "cheatsheet"
 #cask "chronosync"
 #cask "cocoarestclient"
 #cask "fantasy-grounds"
-#cask "openemu"
+#cask "lulu"
 #cask "mailplane"
 #cask "netspot"
 #cask "omniplan"
+#cask "openemu"
 #cask "paw"
 #cask "product-hunt"
 #cask "pluralsight"
 #cask "spotify"
 #cask "tableplus"
 #cask "trophy"
+#cask "valentina-studio"
 
 
 

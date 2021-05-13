@@ -152,6 +152,9 @@ brew cleanup
 echo "Installing Oh My ZSH..."
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 
+echo "adding /opt/homebrew/sbin to path"
+export PATH="/opt/homebrew/sbin:$PATH" >> ~/.zshrc
+
 #Setting up with Dracula theme: https://draculatheme.com/zsh
 #echo "Setting up Oh My Zsh theme..."
 #mkdir ~/.oh-my-zsh/themes/lib/

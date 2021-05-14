@@ -92,10 +92,10 @@ git config --global core.autocrlf input
 # Check for Homebrew to be present, install if it's missing
 if test ! $(which brew); then
     echo "Installing homebrew..."
-    #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     export PATH=/opt/homebrew/bin:$PATH
     export PATH=/opt/homebrew/sbin:$PATH
+    #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 # Update homebrew recipes
@@ -151,7 +151,7 @@ brew cleanup
 
 #Install Zsh & Oh My Zsh
 echo "Installing Oh My ZSH..."
-curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -c
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 
 
 #Setting up with Dracula theme: https://draculatheme.com/zsh

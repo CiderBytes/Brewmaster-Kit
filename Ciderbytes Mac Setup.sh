@@ -95,6 +95,7 @@ if test ! $(which brew); then
     #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     export PATH=/opt/homebrew/bin:$PATH
+    export PATH=/opt/homebrew/sbin:$PATH
 fi
 
 # Update homebrew recipes

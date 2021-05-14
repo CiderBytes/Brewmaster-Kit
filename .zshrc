@@ -145,12 +145,12 @@ alias ohmyzsh="nano ~/.oh-my-zsh"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
+#export PATH="/usr/local/sbin:$PATH"
 ## Locations changed in Big Sur (At least on M1s)
 #source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 #source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+export PATH="/opt/homebrew/bin:$PATH"
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

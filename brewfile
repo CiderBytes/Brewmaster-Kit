@@ -15,6 +15,7 @@ mas "Bear", id: 1091189122
 mas "Compressor", id: 424390742
 mas "Divvy", id: 413857545
 mas "Disk Speed Test", id: 425264550
+mas "DuckDuckGo Privacy Essentials", id: 1482920575
 mas "Evernote Web Clipper", id: 1481669779
 mas "Fantastical", id: 975937182
 mas "Final Cut Pro", id: 424389933
@@ -112,6 +113,7 @@ cask "insomnia"
 cask "linkliar"
 cask "micro-snitch"
 cask "obs"
+cask "openvpn-connect"
 cask "platypus"
 cask "plex"
 cask "postman"
@@ -143,6 +145,7 @@ cask "zoom"
 #cask "cheatsheet"
 #cask "chronosync"
 #cask "cocoarestclient"
+#cask "deltawalker"
 #cask "fantasy-grounds"
 #cask "farrago"
 #cask "lulu"
@@ -153,6 +156,7 @@ cask "zoom"
 #cask "paw"
 #cask "product-hunt"
 #cask "pluralsight"
+#cask "streamlabs-obs"
 #cask "spotify"
 #cask "tableplus"
 #cask "trophy"
@@ -167,18 +171,26 @@ cask "zoom"
 brew "ack"
 #cat with syntax highlighting
 brew "bat"
+# reading, writing, and manipulating image, audio, video, and PDF metadata.
+brew "exiftool"
 # Distributed revision control system
 brew "git"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
+# GnuTLS is a free software implementation of the TLS, SSL and DTLS protocols
+brew "gnutls"
 #CLI GUI Process Manager
 brew "htop"
-#command line HTTP client for APIs
+# command line HTTP client for APIs
 brew "httpie"
+# displaying, creating, converting, modifying, and editing raster images in over 200 formats
+brew "imagemagick"
 #CLI GUI for Git
 brew "lazygit"
 #CLI Logviewer
 brew "lnav"
+# Mac App preferance syncing
+brew "mackup"
 # Mac App Store command-line interface
 brew "mas"
 #neofetch startup asci
@@ -188,6 +200,7 @@ brew "node"
 brew "nvm"
 #PowerLevel10k
 brew "romkatv/powerlevel10k/powerlevel10k"
+brew "telnet"
 brew "tldr"
 #Fast complete searches of codebase and folders (ag)
 brew "the_silver_searcher"

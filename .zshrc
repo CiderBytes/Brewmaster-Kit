@@ -88,7 +88,7 @@ plugins=(
 	bgnotify
 	brew
 	dotenv
-	osx
+	macos
 	sublime
 	web-search
 	z

@@ -60,7 +60,9 @@ case $doit in
     AddKeysToAgent yes\n
     UseKeychain yes\n
     IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
-  ssh-add -K ~/.ssh/id_rsa;;
+  #The -K and -A flags are deprecated and have been replaced by the --apple-use-keychain and --apple-load-keychain flags, respectively.
+  #ssh-add -K ~/.ssh/id_rsa;;
+  ssh-add --apple-use-keychain ~/.ssh/id_rsa;;
 *) 
 echo -e "\n Skipping SSH key creation \n";;
 esac 

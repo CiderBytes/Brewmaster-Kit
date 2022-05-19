@@ -309,6 +309,9 @@ EOF
 #Edit Visual Studio Code terminal font by going to Settings -> terminal.integrated.fontFamily and set to "MesloLGS NF"
 #Set iTerm2 font to "MesloLGS NF"
 
+#Perform restore from Mackup
+mackup restore
+
 echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh in a new terminal window with the following command and then restarting your computer:\n \033[1;31m omz update \033[1;0m"
 
 #echo "Copying dotfiles from Github"

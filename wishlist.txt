@@ -1,3 +1,4 @@
 #Install Clasp
 #Install Type Defitions for auto complete Type Script in Apps Script dev. (npm i -S @types/google-apps-script)
 #Enable FV2
+#Download/cache the .mackup.cfg from iCloud so that the Mackup restore works

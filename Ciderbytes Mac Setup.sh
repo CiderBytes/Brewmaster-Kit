@@ -262,7 +262,7 @@ defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.Web
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
 #Set Sublime Text to open as editor from CLI
-ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
+#ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 
 #Send Screenshots to Screenshots folder on Desktop
 mkdir -p ~/Desktop/Screenshots
@@ -296,7 +296,7 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 #defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 #"Disabling the warning when changing a file extension"
-#defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool true
 
 killall Finder
 

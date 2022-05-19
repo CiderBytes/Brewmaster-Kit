@@ -207,6 +207,15 @@ chmod -R go-w "$(brew --prefix)/share"
 #echo "checking for ohmyzsh upgrade"
 #omz update
 
+#Perform restore from Mackup
+read -n1 -p "Restore from Mackup? [y] `echo $'\n> '`" doit 
+case $doit in  
+  y|Y) 
+  ln -s /Users/brendan/Library/Mobile\ Documents/com~apple~CloudDocs/Mackup/.mackup.cfg ~/.mackup.cfg;
+mackup restore;;
+  *) echo -e "\n Skipping Mackup restore \n";;
+esac 
+
 echo "Github config"
 read -p 'Github username: ' githubuser
 read -p 'Github user email: ' githubuseremail
@@ -309,8 +318,7 @@ EOF
 #Edit Visual Studio Code terminal font by going to Settings -> terminal.integrated.fontFamily and set to "MesloLGS NF"
 #Set iTerm2 font to "MesloLGS NF"
 
-#Perform restore from Mackup
-mackup restore
+
 
 echo -e "Mac setup complete, it is recommeneded try update oh-my-zsh in a new terminal window with the following command and then restarting your computer:\n \033[1;31m omz update \033[1;0m"
 

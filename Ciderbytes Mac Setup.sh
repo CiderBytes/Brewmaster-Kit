@@ -245,7 +245,11 @@ echo "Configuring Mac Preferences"
 defaults write com.apple.finder QLEnableTextSelection -bool TRUE
 
 #"Use column view in all Finder windows by default"
-defaults write com.apple.finder FXPreferredViewStyle Clmv
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv";killall Finder
+#defaults write com.apple.finder FXPreferredViewStyle Clmv
+
+#Set new Finder windows to ~
+defaults write com.apple.finder NewWindowTargetPath -string "file:///~";killall Finder
 
 #"Setting Dock to auto-hide and removing the auto-hiding delay and set to left"
 defaults write com.apple.dock autohide -bool true

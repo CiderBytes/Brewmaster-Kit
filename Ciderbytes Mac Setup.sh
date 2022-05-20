@@ -247,10 +247,11 @@ defaults write com.apple.finder QLEnableTextSelection -bool TRUE
 #"Use column view in all Finder windows by default"
 defaults write com.apple.finder FXPreferredViewStyle Clmv
 
-#"Setting Dock to auto-hide and removing the auto-hiding delay"
+#"Setting Dock to auto-hide and removing the auto-hiding delay and set to left"
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock "orientation" -string "left" && killall Dock
 
 #"Disable the sudden motion sensor as its not useful for SSDs"
 sudo pmset -a sms 0

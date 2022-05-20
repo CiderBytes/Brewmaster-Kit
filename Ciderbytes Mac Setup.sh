@@ -213,6 +213,9 @@ chmod -R go-w "$(brew --prefix)/share"
 read -n1 -p "Restore from Mackup? [y] `echo $'\n> '`" doit 
 case $doit in  
   y|Y) 
+  echo -e "\033[1;31m Download the Mackup folder from iCloud before proceeding\n\033[0m"
+  open /Users/brendan/Library/Mobile\ Documents/com~apple~CloudDocs/Mackup
+  read -p $'\e[1;31mPress [Enter] key after this...\e[0m'
   ln -s /Users/brendan/Library/Mobile\ Documents/com~apple~CloudDocs/Mackup/.mackup.cfg ~/.mackup.cfg;
 mackup restore;;
   *) echo -e "\n Skipping Mackup restore \n";;

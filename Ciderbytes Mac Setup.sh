@@ -160,7 +160,7 @@ echo "This includes macOS updates, security patches, and system data files"
 # Modern softwareupdate command that includes security data updates
 # like MRT (Malware Removal Tool), XProtect, and other security components
 sudo softwareupdate -l --include-config-data  # List available updates
-sudo softwareupdate -i -a  # Install all available updates
+sudo softwareupdate -i -r -R  # Install all available updates
 
 echo "✅ System software update completed"
 

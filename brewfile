@@ -1,6 +1,8 @@
 cask_args appdir: "/Applications"
 
+#====================================================
 # brew tap
+#====================================================
 tap "homebrew/cask-fonts"
 tap "homebrew/cask"
 tap "homebrew/bundle"
@@ -8,14 +10,21 @@ tap "homebrew/core"
 tap "homebrew/services"
 
 
+#====================================================
 # mas install - BASE
+#====================================================
 
+mas "1Password for Safari", id: 1569813296
+mas "Actions", id: 1586435171
+mas "AJA System Test Lite", id: 1092006274
 mas "1Blocker", id: 1107421413
-mas "Bear", id: 1091189122
+mas "Blackmagic Disk Speed Test", id: 425264550
 mas "Compressor", id: 424390742
 mas "Divvy", id: 413857545
 mas "Disk Speed Test", id: 425264550
-mas "DuckDuckGo Privacy Essentials", id: 1482920575
+mas "Divvy", id: 413857545
+mas "Drafts", id: 1435957248
+mas "DuckDuckGo Privacy for Safari", id: 1482920575
 mas "Evernote Web Clipper", id: 1481669779
 mas "Fantastical", id: 975937182
 mas "Final Cut Pro", id: 424389933
@@ -26,28 +35,40 @@ mas "Mactracker", id: 430255202
 mas "Motion", id: 434290957
 mas "Numbers", id: 409203825
 mas "OmniGraffle", id: 1142578753
+mas "OpenIn", id: 1643649331
 mas "Pages", id: 409201541
+mas "Peek", id: 1554235898
+mas "Pi-hole Remote", id: 1515445551
 mas "Reeder", id: 880001334
 mas "ReadKit", id: 588726889
 mas "Remote Desktop", id: 409907375
+mas "Rules", id: 6461118886
+mas "Save to Reader", id: 1640236961
 mas "Sequel Ace", id: 1518036000
 mas "Slack", id: 803453959
 mas "SSH Copy", id: 823961613
 mas "The Unarchiver", id: 425424353
+mas "Toggl Track", id: 1291898086
 mas "Twitter", id: 409789998
 mas "Type2Phone", id: 472717129
 mas "WiFi Explorer", id: 494803304
+mas "Windows App", id: 1295203466
 
 
 
-#mas install - OPTIONAL
+#====================================================
+##mas install - OPTIONAL
+#====================================================
 
+#mas "Apple Configurator", id: 1037126344
+#mas "Bear", id: 1091189122
 #mas "Bee", id: 726099620
 #mas "Bridge Constructor Portal", id: 1316061122
 #mas "CamControl", id: 1503271162
 #mas "Core Tunnel", id: 1354318707
 #mas "Dark Reader for Safari", id: 1438243180
 #mas "Decked Builder Lite", id: 406317734
+#mas "DuckDuckGo", id: 663592361
 #mas "Display Menu", id: 549083868
 #mas "EasyFind", id: 411673888
 #mas "Encrypto", id: 935235287
@@ -55,14 +76,17 @@ mas "WiFi Explorer", id: 494803304
 #mas "Geekbench 4", id: 1175706108
 #mas "Geekbench 5", id: 1478447657
 #mas "GIF Keyboard", id: 1043270657
-
+#mas "GoPro Quik", id: 561350520
+#mas "GoPro Player", id: 1460836908
 #mas "GIPHY CAPTURE", id: 668208984
 #mas "iHosts", id: 1102004240
 #mas "Image2icon", id: 992115977
 #mas "iMovie", id: 408981434
 #mas "Install macOS Sierra", id: 1127487414
 #mas "iUnarchive", id: 418517475
+#mas "Kindle", id: 302584613
 #mas "LanScan", id: 472226235
+#mas "Ledger Extension", id: 1627727841
 #mas "Marked 2", id: 890031187
 #mas "Micro Snitch", id: 972028355
 #mas "Minesweeper Deluxe", id: 657011614
@@ -79,6 +103,8 @@ mas "WiFi Explorer", id: 494803304
 #mas "Speedtest", id: 1153157709
 
 #mas "SSH Tunnel", id: 734418810
+#mas "Telegram", id: 747648890
+
 #mas "ToothFairy", id: 1191449274
 #mas "Twitter", id: 409789998
 #mas "Visualizer", id: 1296177026
@@ -89,7 +115,9 @@ mas "WiFi Explorer", id: 494803304
 
 
 
+#====================================================
 # brew cask install - BASE
+#====================================================
 
 cask "font-hack-nerd-font"
 cask "font-meslo-lg-nerd-font"
@@ -98,49 +126,64 @@ cask "1password"
 cask "1password-cli"
 cask "alfred"
 cask "betterzip"
-cask "cakebrew"
+cask "brave-browser"
 cask "choosy"
 cask "dash"
+cask "daisydisk"
+cask "devonthink"
 cask "discord"
+cask "elgato-stream-deck"
+cask "elgato-wave-link"
 cask "firefox"
 cask "fission"
 cask "fluid"
+cask "github"
 cask "google-chrome"
 cask "google-cloud-sdk"
 cask "handbrake"
 cask "iterm2"
 cask "insomnia"
-cask "linkliar"
+cask "insta360-studio"
+cask "loopback"
+cask "local"
+cask "mac-mouse-fix"
 cask "micro-snitch"
 cask "obs"
+cask "obsidian"
 cask "openvpn-connect"
 cask "platypus"
 cask "plex"
-cask "postman"
 cask "powershell"
 cask "provisionql"
+cask "qfinder-pro"
 cask "qlcolorcode"
 cask "qlimagesize"
 cask "qlmarkdown"
 cask "quicklook-json"
 cask "sequel-pro"
-cask "signal"
 cask "sqleditor"
 cask "suspicious-package"
 cask "sublime-text"
 cask "steam"
 cask "tor-browser"
+cask "tower"
 cask "transmit"
+cask "utm"
 cask "visual-studio-code"
 cask "vlc"
-cask "vmware-fusion"
 cask "wondershare-uniconverter"
 cask "zoom"
 
 
 
+#====================================================
 #brew cask install - OPTIONAL
+#====================================================
 
+cask "airfoil"
+cask "arduino"
+cask "audio-hijack"
+cask "balenaetcher"
 #cask "bettertouchtool"
 #cask "cheatsheet"
 #cask "chronosync"
@@ -154,66 +197,72 @@ cask "zoom"
 #cask "omniplan"
 #cask "openemu"
 #cask "paw"
+cask "piezo"
 #cask "product-hunt"
 #cask "pluralsight"
+cask "postman"
+#cask "signal"
 #cask "streamlabs-obs"
+#cask "sublime-text", args: { appdir: "/Applications" }
 #cask "spotify"
 #cask "tableplus"
 #cask "trophy"
 #cask "valentina-studio"
+cask "vmware-fusion"
+cask "webots"
+cask "wordpresscom-studio"
 
 
 
-
+#====================================================
 ## brew install - BASE
+#====================================================
 
-# Faster search replacement for grep
-brew "ack"
-#cat with syntax highlighting
-brew "bat"
-# reading, writing, and manipulating image, audio, video, and PDF metadata.
-brew "exiftool"
-# Distributed revision control system
-brew "git"
-# GNU Pretty Good Privacy (PGP) package
-brew "gnupg"
-# GnuTLS is a free software implementation of the TLS, SSL and DTLS protocols
-brew "gnutls"
-#CLI GUI Process Manager
-brew "htop"
-# command line HTTP client for APIs
-brew "httpie"
-# displaying, creating, converting, modifying, and editing raster images in over 200 formats
-brew "imagemagick"
-#CLI GUI for Git
-brew "lazygit"
-#CLI Logviewer
-brew "lnav"
-# Mac App preferance syncing
-brew "mackup"
-# Mac App Store command-line interface
-brew "mas"
-#neofetch startup asci
-brew "neofetch"
-brew "node"
-# Manage multiple Node.js versions
+brew "ack"          #Faster search replacement for grep
+brew "bat"          #cat with syntax highlighting
+brew "exiftool"     #reading, writing, and manipulating image, audio, video, and PDF metadata.
+brew "fastfetch"    #fastfetc startup asci
+brew "git"          #Distributed revision control system
+brew "gnupg"        #GNU Pretty Good Privacy (PGP) package
+brew "gnutls"       #GnuTLS is a free software implementation of the TLS, SSL and DTLS protocols
+brew "htop"         #CLI GUI Process Manager
+brew "httpie"       # command line HTTP client for APIs
+brew "imagemagick"  # displaying, creating, converting, modifying, and editing raster images in over 200 formats
+brew "lazygit"      #CLI GUI for Git
+brew "lnav"         #CLI Logviewer
+brew "libheif"      #HEIF file format decoder and encoder
+#brew "mackup"      # Mac App preferance syncing
+brew "mas"          # Mac App Store command-line interface
+brew "node"         # Manage multiple Node.js versions
 brew "nvm"
-#PowerLevel10k
-brew "romkatv/powerlevel10k/powerlevel10k"
+brew "pandoc"
+brew "powerlevel10k"            #PowerLevel10k
+#brew "shared-mime-info"        #Database of common MIME types
+brew "speedtest-cli"
 brew "telnet"
-brew "tldr"
-#Fast complete searches of codebase and folders (ag)
-brew "the_silver_searcher"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@1.1"
-# Manage compile and link flags for libraries
-brew "pkg-config"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
-# Internet file retriever
+brew "tlrc"
+#brew "the_silver_searcher"     #Fast complete searches of codebase and folders (ag)
+#brew "mosquitto"   #MQTT 
+brew "openssl@1.1"  # Cryptography and SSL/TLS Toolkit
+brew "pkg-config"   # Manage compile and link flags for libraries
+brew "pnpm"
+brew "tmux"         # Display directories as trees (with optional color/HTML output)
+brew "tree"         # Internet file retriever
 brew "wget"
-brew "youtube-dl"
+brew "yt-dlp"       #fuzzy finder cli
+brew "zoxide"
 brew "zsh"
 
+
+#====================================================
+## Brew Install - OPTIONAL
+#====================================================
+
+#brew "zoxide"      #Shell extension to navigate your filesystem faster
+#brew "mcfly"       # Fly through your shell history
+
+
+#====================================================
 ##zsh plugins
+#====================================================
 brew "zsh-syntax-highlighting"

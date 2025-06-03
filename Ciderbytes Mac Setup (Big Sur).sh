@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Setup script for new Mac
-#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/Ciderbytes%20Mac%20Setup.zsh)"
+#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/Ciderbytes%20Mac%20Setup.sh)"
 
 echo "Grant sudo access upfront"
 sudo -v

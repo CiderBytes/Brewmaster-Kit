@@ -336,8 +336,8 @@ case $BREWFILE_SOURCE in
         # Copy local file to standard location if it's not already there
         if [[ "$BREWFILE_PATH" != "$HOME/Brewfile" ]]; then
             echo "📋 Copying local Brewfile to ~/Brewfile for processing..."
-            cp "$BREWFILE_PATH" ~/Brewfile
-            BREWFILE_PATH="~/Brewfile"
+            cp "$BREWFILE_PATH" "$HOME/Brewfile"  # Use $HOME instead of ~
+            BREWFILE_PATH="$HOME/Brewfile"
         fi
         echo "✅ Local Brewfile ready"
         ;;

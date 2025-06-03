@@ -149,21 +149,25 @@ else
     echo "📱 Running macOS ${osvers_major}.${osvers_minor}.${osvers_dot_version}"
     echo "ℹ️  Rosetta 2 is not required for this macOS version"
 fi
-
 # =============================================================================
-# SYSTEM SOFTWARE UPDATES
+# SYSTEM SOFTWARE UPDATES (Optional)
 # =============================================================================
 
-echo -e "\n🔄 Updating system software and security data..."
-echo "This includes macOS updates, security patches, and system data files"
+echo -e "\n🔄 System Software Updates"
+read "do_updates?Would you like to check for and install macOS updates and security data? [Y/n] "
+do_updates=${do_updates:-Y}
 
-# Modern softwareupdate command that includes security data updates
-# like MRT (Malware Removal Tool), XProtect, and other security components
-sudo softwareupdate -l --include-config-data  # List available updates
-sudo softwareupdate -i -r -R  # Install all available updates
-
-echo "✅ System software update completed"
-
+if [[ "$do_updates" =~ ^[Yy]$ ]]; then
+    echo -e "\n🔄 Updating system software and security data..."
+    echo "This includes macOS updates, security patches, and system data files"
+    # Modern softwareupdate command that includes security data updates
+    # like MRT (Malware Removal Tool), XProtect, and other security components
+    sudo softwareupdate -l --include-config-data # List available updates
+    sudo softwareupdate -i -a # Install all available updates
+    echo "✅ System software update completed"
+else
+    echo "⏭️  Skipping system software updates as requested."
+fi
 
 # =============================================================================
 # GIT CONFIGURATION

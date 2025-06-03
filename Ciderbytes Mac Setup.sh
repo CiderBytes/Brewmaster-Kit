@@ -429,7 +429,7 @@ else
     echo -e "\n⏳ Starting installation process..."
     echo "Installation may take 15-30 minutes depending on your internet connection"
     
-    brew bundle install -v  --display-time --file="$EXPANDED_BREWFILE_PATH"
+    brew bundle install -v --file="$EXPANDED_BREWFILE_PATH"
     echo "✅ Application installation from Brewfile completed"
 fi
 # =============================================================================

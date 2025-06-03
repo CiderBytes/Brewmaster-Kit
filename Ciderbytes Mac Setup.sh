@@ -412,17 +412,10 @@ fi
 # =============================================================================
 
 echo -e "\n🔑 SSH Key Setup"
-echo "Choose your SSH key management approach:"
-echo "1. Traditional local SSH keys (stored in ~/.ssh/)"
-echo "2. 1Password SSH key management (keys assumed pre-saved in vault)"
+echo "Using your configured SSH key management preference..."
 
-# Use configured default if user just presses enter
-if [[ -n "$ssh_default" ]]; then
-    read "ssh_choice?Select option [1/2] (default: $ssh_default): "
-    ssh_choice=${ssh_choice:-$ssh_default}
-else
-    read "ssh_choice?Select option [1/2]: "
-fi
+# Use the configured default from earlier
+ssh_choice="$ssh_default"
 
 case $ssh_choice in
     1)

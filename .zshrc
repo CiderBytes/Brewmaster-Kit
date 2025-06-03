@@ -84,17 +84,36 @@ export ZSH="$HOME/.oh-my-zsh"
 # Add wisely, as too many plugins slow down shell startup.
 
 plugins=(
-	git
+	1password
+    #arduino-cli
 	bgnotify
 	brew
-	dotenv
-	macos
-	sublime
-	web-search
-	z
+	colorize
+    dotenv
+    gh
+    git
+    gcloud
+	#httpie
+    iterm2
+    #jira
+    macos
+    #node
+    nvm
+	python
+    qrcode
+    #rsync
+    ssh
+    sublime
+    sudo
+    #tmux
+	vscode
+    web-search
+	#wp-cli
+    #xcode
+    z
+    #zoxide
 	zsh-nvm
 	zsh-autosuggestions
-	#zsh-syntax-highlighting
 	)
 
 if type brew &>/dev/null; then
@@ -103,8 +122,6 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit
 fi
-
-. ~/.oh-my-zsh/custom/plugins/z-master/z.sh
 
 source $ZSH/oh-my-zsh.sh
 

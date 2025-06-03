@@ -3,11 +3,8 @@ cask_args appdir: "/Applications"
 #====================================================
 # brew tap
 #====================================================
-tap "homebrew/cask-fonts"
-tap "homebrew/cask"
-tap "homebrew/bundle"
-tap "homebrew/core"
-tap "homebrew/services"
+#tap "homebrew/cask"
+
 
 
 #====================================================
@@ -17,7 +14,6 @@ tap "homebrew/services"
 mas "1Password for Safari", id: 1569813296
 mas "Actions", id: 1586435171
 mas "AJA System Test Lite", id: 1092006274
-mas "1Blocker", id: 1107421413
 mas "Blackmagic Disk Speed Test", id: 425264550
 mas "Compressor", id: 424390742
 mas "Divvy", id: 413857545
@@ -25,11 +21,11 @@ mas "Disk Speed Test", id: 425264550
 mas "Divvy", id: 413857545
 mas "Drafts", id: 1435957248
 mas "DuckDuckGo Privacy for Safari", id: 1482920575
-mas "Evernote Web Clipper", id: 1481669779
 mas "Fantastical", id: 975937182
 mas "Final Cut Pro", id: 424389933
 mas "Gifox", id: 1082624744
-mas "Jira", id: 1475897096
+mas "GoPro Quik", id: 561350520
+mas "GoPro Player", id: 1460836908
 mas "Keynote", id: 409183694
 mas "Mactracker", id: 430255202
 mas "Motion", id: 434290957
@@ -39,8 +35,6 @@ mas "OpenIn", id: 1643649331
 mas "Pages", id: 409201541
 mas "Peek", id: 1554235898
 mas "Pi-hole Remote", id: 1515445551
-mas "Reeder", id: 880001334
-mas "ReadKit", id: 588726889
 mas "Remote Desktop", id: 409907375
 mas "Rules", id: 6461118886
 mas "Save to Reader", id: 1640236961
@@ -49,7 +43,6 @@ mas "Slack", id: 803453959
 mas "SSH Copy", id: 823961613
 mas "The Unarchiver", id: 425424353
 mas "Toggl Track", id: 1291898086
-mas "Twitter", id: 409789998
 mas "Type2Phone", id: 472717129
 mas "WiFi Explorer", id: 494803304
 mas "Windows App", id: 1295203466
@@ -60,6 +53,7 @@ mas "Windows App", id: 1295203466
 ##mas install - OPTIONAL
 #====================================================
 
+#mas "1Blocker", id: 1107421413
 #mas "Apple Configurator", id: 1037126344
 #mas "Bear", id: 1091189122
 #mas "Bee", id: 726099620
@@ -76,14 +70,13 @@ mas "Windows App", id: 1295203466
 #mas "Geekbench 4", id: 1175706108
 #mas "Geekbench 5", id: 1478447657
 #mas "GIF Keyboard", id: 1043270657
-#mas "GoPro Quik", id: 561350520
-#mas "GoPro Player", id: 1460836908
 #mas "GIPHY CAPTURE", id: 668208984
 #mas "iHosts", id: 1102004240
 #mas "Image2icon", id: 992115977
 #mas "iMovie", id: 408981434
 #mas "Install macOS Sierra", id: 1127487414
 #mas "iUnarchive", id: 418517475
+#mas "Jira", id: 1475897096
 #mas "Kindle", id: 302584613
 #mas "LanScan", id: 472226235
 #mas "Ledger Extension", id: 1627727841
@@ -93,18 +86,17 @@ mas "Windows App", id: 1295203466
 #mas "Monosnap", id: 540348655
 #mas "Network Logger Pro", id: 764324406
 #mas "Network Speed Tester", id: 1217419133
-
 #mas "Playgrounds", id: 1496833156
 #mas "Pocket", id: 568494494
 #mas "QVR Client", id: 806101067
+#mas "ReadKit", id: 588726889
+#mas "Reeder", id: 880001334
 #mas "Reacting Live", id: 1510179491
 #mas "Server", id: 883878097
 #mas "SnipperApp 2", id: 1469182443
 #mas "Speedtest", id: 1153157709
-
 #mas "SSH Tunnel", id: 734418810
 #mas "Telegram", id: 747648890
-
 #mas "ToothFairy", id: 1191449274
 #mas "Twitter", id: 409789998
 #mas "Visualizer", id: 1296177026
@@ -132,11 +124,11 @@ cask "dash"
 cask "daisydisk"
 cask "devonthink"
 cask "discord"
+cask "discord@canary"
 cask "elgato-stream-deck"
 cask "elgato-wave-link"
 cask "firefox"
 cask "fission"
-cask "fluid"
 cask "github"
 cask "google-chrome"
 cask "google-cloud-sdk"
@@ -146,6 +138,7 @@ cask "insomnia"
 cask "insta360-studio"
 cask "loopback"
 cask "local"
+cask "macwhisper"
 cask "mac-mouse-fix"
 cask "micro-snitch"
 cask "obs"
@@ -157,14 +150,12 @@ cask "powershell"
 cask "provisionql"
 cask "qfinder-pro"
 cask "qlcolorcode"
-cask "qlimagesize"
 cask "qlmarkdown"
 cask "quicklook-json"
-cask "sequel-pro"
 cask "sqleditor"
 cask "suspicious-package"
-cask "sublime-text"
 cask "steam"
+cask "sublime-text"
 cask "tor-browser"
 cask "tower"
 cask "transmit"
@@ -180,10 +171,10 @@ cask "zoom"
 #brew cask install - OPTIONAL
 #====================================================
 
-cask "airfoil"
-cask "arduino"
-cask "audio-hijack"
-cask "balenaetcher"
+#cask "airfoil"
+#cask "arduino-ide"
+#cask "audio-hijack"
+#cask "balenaetcher"
 #cask "bettertouchtool"
 #cask "cheatsheet"
 #cask "chronosync"
@@ -191,26 +182,26 @@ cask "balenaetcher"
 #cask "deltawalker"
 #cask "fantasy-grounds"
 #cask "farrago"
+#cask "fluid"
 #cask "lulu"
 #cask "mailplane"
 #cask "netspot"
 #cask "omniplan"
 #cask "openemu"
 #cask "paw"
-cask "piezo"
+#cask "piezo"
 #cask "product-hunt"
 #cask "pluralsight"
-cask "postman"
+#cask "postman"
 #cask "signal"
 #cask "streamlabs-obs"
-#cask "sublime-text", args: { appdir: "/Applications" }
 #cask "spotify"
 #cask "tableplus"
 #cask "trophy"
 #cask "valentina-studio"
-cask "vmware-fusion"
-cask "webots"
-cask "wordpresscom-studio"
+#cask "vmware-fusion"
+#cask "webots"
+#cask "wordpresscom-studio"
 
 
 
@@ -231,32 +222,33 @@ brew "imagemagick"  # displaying, creating, converting, modifying, and editing r
 brew "lazygit"      #CLI GUI for Git
 brew "lnav"         #CLI Logviewer
 brew "libheif"      #HEIF file format decoder and encoder
-#brew "mackup"      # Mac App preferance syncing
 brew "mas"          # Mac App Store command-line interface
 brew "node"         # Manage multiple Node.js versions
 brew "nvm"
 brew "pandoc"
 brew "powerlevel10k"            #PowerLevel10k
-#brew "shared-mime-info"        #Database of common MIME types
 brew "speedtest-cli"
 brew "telnet"
 brew "tlrc"
-#brew "the_silver_searcher"     #Fast complete searches of codebase and folders (ag)
-#brew "mosquitto"   #MQTT 
-brew "openssl@1.1"  # Cryptography and SSL/TLS Toolkit
 brew "pkg-config"   # Manage compile and link flags for libraries
 brew "pnpm"
 brew "tmux"         # Display directories as trees (with optional color/HTML output)
 brew "tree"         # Internet file retriever
 brew "wget"
-brew "yt-dlp"       #fuzzy finder cli
-brew "zoxide"
+brew "yt-dlp"       
+brew "zoxide"       #fuzzy finder cli
 brew "zsh"
 
 
 #====================================================
 ## Brew Install - OPTIONAL
 #====================================================
+
+#brew "the_silver_searcher"     #Fast complete searches of codebase and folders (ag)
+#brew "mackup"      # Mac App preferance syncing
+#brew "mosquitto"   #MQTT 
+#brew "openssl@3"    # Cryptography and SSL/TLS Toolkit
+#brew "shared-mime-info"        #Database of common MIME types
 
 #brew "zoxide"      #Shell extension to navigate your filesystem faster
 #brew "mcfly"       # Fly through your shell history

@@ -170,6 +170,31 @@ else
 fi
 
 # =============================================================================
+# ENABLE TOUCH ID FOR SUDO (Sonoma and Later)
+# =============================================================================
+
+# Detect macOS version (major version 14 = Sonoma)
+macos_version=$(sw_vers -productVersion)
+macos_major=$(echo "$macos_version" | cut -d. -f1)
+
+if [[ $macos_major -ge 14 ]]; then
+    echo -e "\n🔒 Enabling Touch ID for sudo authentication (macOS Sonoma or later)..."
+    # Use sed and tee to uncomment the pam_tid.so line in the template and write it to sudo_local
+    if [[ -f /etc/pam.d/sudo_local.template ]]; then
+        if sudo sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local >/dev/null; then
+            echo "✅ Touch ID for sudo enabled. This will persist through OS updates."
+        else
+            echo "❌ Failed to enable Touch ID for sudo."
+        fi
+    else
+        echo "❌ /etc/pam.d/sudo_local.template not found. Skipping Touch ID setup."
+    fi
+else
+    echo "ℹ️  Touch ID for sudo is only supported on macOS Sonoma (14.x) and later."
+fi
+
+
+# =============================================================================
 # GIT CONFIGURATION
 # =============================================================================
 
@@ -404,7 +429,7 @@ else
     echo -e "\n⏳ Starting installation process..."
     echo "Installation may take 15-30 minutes depending on your internet connection"
     
-    brew bundle install --file="$EXPANDED_BREWFILE_PATH"
+    brew bundle install -v  --display-time --file="$EXPANDED_BREWFILE_PATH"
     echo "✅ Application installation from Brewfile completed"
 fi
 # =============================================================================
@@ -654,8 +679,35 @@ fi
 echo -e "\n👤 Git User Configuration"
 echo "Setting up your Git identity for commits and repositories"
 
-read "githubuser?Enter your GitHub username: "
-read "githubuseremail?Enter your GitHub email address: "
+# Get current global git user.name and user.email, if set
+current_git_name=$(git config --global user.name)
+current_git_email=$(git config --global user.email)
+
+# Prompt for user.name
+if [[ -n "$current_git_name" ]]; then
+    echo "Current Git user.name: $current_git_name"
+    read "update_name?Would you like to update your Git user.name? [y/N] "
+    if [[ "$update_name" =~ ^[Yy]$ ]]; then
+        read "githubuser?Enter your new Git user.name: "
+    else
+        githubuser="$current_git_name"
+    fi
+else
+    read "githubuser?Enter your Git user.name: "
+fi
+
+# Prompt for user.email
+if [[ -n "$current_git_email" ]]; then
+    echo "Current Git user.email: $current_git_email"
+    read "update_email?Would you like to update your Git user.email? [y/N] "
+    if [[ "$update_email" =~ ^[Yy]$ ]]; then
+        read "githubuseremail?Enter your new Git user.email: "
+    else
+        githubuseremail="$current_git_email"
+    fi
+else
+    read "githubuseremail?Enter your Git user.email: "
+fi
 
 # Configure Git user information globally
 echo "📝 Configuring Git user information..."

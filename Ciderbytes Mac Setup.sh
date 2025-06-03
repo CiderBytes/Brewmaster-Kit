@@ -321,7 +321,10 @@ echo "📦 Setting up Brewfile..."
 case $BREWFILE_SOURCE in
     "hosted"|"custom_hosted")
         echo "📥 Downloading Brewfile from: $BREWFILE_URL"
-        if curl -fsSL --output "$BREWFILE_PATH" "$BREWFILE_URL"; then
+        # Expand tilde in path for curl command
+        EXPANDED_BREWFILE_PATH="${BREWFILE_PATH/#\~/$HOME}"
+        
+        if curl -fsSL --output "$EXPANDED_BREWFILE_PATH" "$BREWFILE_URL"; then
             echo "✅ Brewfile downloaded successfully"
         else
             echo "❌ Failed to download Brewfile from $BREWFILE_URL"

@@ -10,6 +10,22 @@
 # =============================================================================
 
 # =============================================================================
+# FULL DISK ACCESS WARNING
+# =============================================================================
+
+echo -e "\n⚠️  This script needs Terminal to have Full Disk Access in order to configure Safari and other system preferences."
+echo "   1. Go to System Settings > Privacy & Security > Full Disk Access."
+echo "   2. Add your Terminal app (or iTerm, etc) to the list."
+echo "   3. Restart Terminal after making the change."
+echo "   4. Then re-run this script if you just made the change."
+echo
+
+# Open the Full Disk Access pane in System Settings (macOS 13+)
+open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+
+read "?Press [Enter] to confirm you have granted Full Disk Access and wish to continue..."
+
+# =============================================================================
 # INITIAL SETUP AND PERMISSIONS
 # =============================================================================
 

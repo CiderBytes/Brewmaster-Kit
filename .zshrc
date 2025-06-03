@@ -111,7 +111,7 @@ plugins=(
 	#wp-cli
     #xcode
     z
-    #zoxide
+    zoxide
 	zsh-nvm
 	zsh-autosuggestions
 	)

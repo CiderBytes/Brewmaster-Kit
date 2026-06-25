@@ -17,15 +17,15 @@ mas "AJA System Test Lite", id: 1092006274
 mas "Blackmagic Disk Speed Test", id: 425264550
 mas "Compressor", id: 424390742
 mas "Divvy", id: 413857545
-mas "Disk Speed Test", id: 425264550
-mas "Divvy", id: 413857545
 mas "Drafts", id: 1435957248
+mas "Dropzone 4", id: 1485052491
 mas "DuckDuckGo Privacy for Safari", id: 1482920575
 mas "Fantastical", id: 975937182
 mas "Final Cut Pro", id: 424389933
-mas "Gifox", id: 1082624744
 mas "GoPro Quik", id: 561350520
 mas "GoPro Player", id: 1460836908
+mas "iMovie", id: 408981434
+mas "Keka", id: 470158793
 mas "Keynote", id: 409183694
 mas "Mactracker", id: 430255202
 mas "Motion", id: 434290957
@@ -70,6 +70,7 @@ mas "Windows App", id: 1295203466
 #mas "Geekbench 4", id: 1175706108
 #mas "Geekbench 5", id: 1478447657
 #mas "GIF Keyboard", id: 1043270657
+#mas "Gifox", id: 1082624744
 #mas "GIPHY CAPTURE", id: 668208984
 #mas "iHosts", id: 1102004240
 #mas "Image2icon", id: 992115977
@@ -116,9 +117,11 @@ cask "font-meslo-lg-nerd-font"
 
 cask "1password"
 cask "1password-cli"
+cask "affinity"
 cask "alfred"
 cask "betterzip"
 cask "brave-browser"
+cask "bruno"
 cask "choosy"
 cask "dash"
 cask "daisydisk"
@@ -131,10 +134,9 @@ cask "firefox"
 cask "fission"
 cask "github"
 cask "google-chrome"
-cask "google-cloud-sdk"
-cask "handbrake"
+cask "gcloud-cli"
+cask "handbrake-app"
 cask "iterm2"
-cask "insomnia"
 cask "insta360-studio"
 cask "loopback"
 cask "local"
@@ -144,14 +146,13 @@ cask "micro-snitch"
 cask "obs"
 cask "obsidian"
 cask "openvpn-connect"
-cask "platypus"
+cask "orbstack"
 cask "plex"
 cask "powershell"
 cask "provisionql"
 cask "qfinder-pro"
 cask "qlcolorcode"
 cask "qlmarkdown"
-cask "quicklook-json"
 cask "sqleditor"
 cask "suspicious-package"
 cask "steam"
@@ -183,6 +184,7 @@ cask "zoom"
 #cask "fantasy-grounds"
 #cask "farrago"
 #cask "fluid"
+#cask "insomnia"
 #cask "lulu"
 #cask "mailplane"
 #cask "netspot"
@@ -190,9 +192,11 @@ cask "zoom"
 #cask "openemu"
 #cask "paw"
 #cask "piezo"
+#cask "platypus"
 #cask "product-hunt"
 #cask "pluralsight"
 #cask "postman"
+#cask "quicklook-json" #(UNSUPPORTED)
 #cask "signal"
 #cask "streamlabs-obs"
 #cask "spotify"
@@ -223,8 +227,7 @@ brew "lazygit"      #CLI GUI for Git
 brew "lnav"         #CLI Logviewer
 brew "libheif"      #HEIF file format decoder and encoder
 brew "mas"          # Mac App Store command-line interface
-brew "node"         # Manage multiple Node.js versions
-brew "nvm"
+brew "mise"         # Replaces individual managers like nvm, pyenv, rbenv, etc., with a single rust-based binary
 brew "pandoc"
 brew "powerlevel10k"            #PowerLevel10k
 brew "speedtest-cli"
@@ -247,6 +250,8 @@ brew "zsh"
 #brew "the_silver_searcher"     #Fast complete searches of codebase and folders (ag)
 #brew "mackup"      # Mac App preferance syncing
 #brew "mosquitto"   #MQTT 
+#brew "node"         # Manage multiple Node.js versions
+#brew "nvm"
 #brew "openssl@3"    # Cryptography and SSL/TLS Toolkit
 #brew "shared-mime-info"        #Database of common MIME types
 

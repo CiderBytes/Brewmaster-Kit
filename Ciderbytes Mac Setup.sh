@@ -637,10 +637,9 @@ phase_brew() {
     # ---------------------------------------------------------
     # CORE BASELINE FETCH (Supports HTTP or Local Path)
     # ---------------------------------------------------------
-    local core_target="$REPO_RECIPES_TARGET/core_brewfile.txt"
-    log_verbose "Fetching core base from $core_target..."
+    log_verbose "Fetching core base from $CORE_BREW_TARGET..."
     
-    if ! fetch_core_with_fallback "$core_target" "$BREWFILE_PATH" "Core Base blueprint"; then
+    if ! fetch_core_with_fallback "$CORE_BREW_TARGET" "$BREWFILE_PATH" "Core Base blueprint"; then
         return 1
     fi
     echo "✅ Core Base blueprint loaded."

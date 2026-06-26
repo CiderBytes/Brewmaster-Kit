@@ -31,6 +31,10 @@ REPO_BASE_TARGET=${SETUP_BASE_TARGET:-"https://raw.githubusercontent.com/CiderBy
 REPO_P10K_TARGET=${SETUP_P10K_TARGET:-"$REPO_BASE_TARGET/recipes/shell/.p10k.zsh"}
 GITIGNORE_TARGET=${SETUP_GITIGNORE_TARGET:-"https://raw.githubusercontent.com/github/gitignore/main/Global/macOS.gitignore"}
 
+# System Paths & Logging (Add this back in!)
+LOG_FILE="$HOME/.brewmaster_setup.log"
+ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
 # =============================================================================
 # BREWFILE RECIPES
 # =============================================================================
@@ -559,9 +563,10 @@ phase_system() {
         echo "✅ Touch ID for sudo enabled."
     fi
 
-    # 5. Xcode Command Line Tools
+    # 5. Xcode Command Line Tools & Licensing
     # Provides git, make, gcc, and other vital compiling libraries necessary for Homebrew.
-    echo -e "\n🛠️  Checking Xcode installation..."
+    echo -e "\n🛠️  Checking Xcode installation & licensing..."
+    
     if ! xcode-select -p &> /dev/null; then
         echo -e "\n📦 Installing Xcode Command Line Tools..."
         log_verbose "Triggering xcode-select --install..."
@@ -571,6 +576,12 @@ phase_system() {
     else
         echo -e "\n✅ Xcode Command Line Tools already installed."
         log_verbose "Path found at: $(xcode-select -p)"
+    fi
+
+    # Automatically accept the Xcode license to prevent Homebrew/Git execution blocks
+    if command -v xcodebuild &> /dev/null; then
+        log_verbose "Ensuring Xcode license is accepted..."
+        sudo xcodebuild -license accept 2>/dev/null || true
     fi
 }
 
@@ -848,11 +859,15 @@ phase_shell() {
         brew install zsh-syntax-highlighting 2>&1 | tee -a "$LOG_FILE"
 
         log_verbose "Cloning OMZ-native plugins..."
-        [[ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]] && git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" -q
-        [[ ! -d "$ZSH_CUSTOM_DIR/plugins/z" ]] && git clone https://github.com/rupa/z.git "$ZSH_CUSTOM_DIR/plugins/z" -q
+        # Safely define the OMZ custom directory locally to prevent empty path evaluations
+        local omz_custom="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+        mkdir -p "$omz_custom/plugins"
+        
+        [[ ! -d "$omz_custom/plugins/zsh-autosuggestions" ]] && git clone https://github.com/zsh-users/zsh-autosuggestions "$omz_custom/plugins/zsh-autosuggestions" -q
+        [[ ! -d "$omz_custom/plugins/z" ]] && git clone https://github.com/rupa/z.git "$omz_custom/plugins/z" -q
 
         # Update OMZ custom plugins if they already existed
-        for plugin in "$ZSH_CUSTOM_DIR"/plugins/*/; do
+        for plugin in "$omz_custom"/plugins/*/; do
             if [[ -d "$plugin/.git" ]]; then
                 log_verbose "Git pulling latest for $(basename "$plugin")..."
                 git -C "$plugin" pull -q

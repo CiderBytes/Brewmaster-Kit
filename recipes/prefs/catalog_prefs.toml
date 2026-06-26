@@ -1,0 +1,24 @@
+# =============================================================================
+# ⚙️ BREWMASTER MASTER CATALOG: OPTIONAL MACOS PREFERENCES
+# =============================================================================
+# INSTRUCTIONS: To apply any system tweak below, simply delete the '#' character
+# from the beginning of that line during the manifest edit prompt.
+
+# 🖥️ DESKTOP & FINDER CUSTOMIZATIONS
+# defaults write com.apple.finder CreateDesktop -bool false                   # Hide all desktop icons
+# defaults write com.apple.finder ShowPathbar -bool true                       # Show path bar at bottom of Finder
+# defaults write com.apple.finder ShowStatusBar -bool true                      # Show status bar with file counts
+
+# 🚀 DOCK & MISSION CONTROL PERFORMANCE
+# defaults write com.apple.dock autohide-time-modifier -float 0.15              # Speed up Dock show/hide animation
+# defaults write com.apple.dock autohide-delay -float 0                        # Remove Dock show/hide delay entirely
+# defaults write com.apple.dock expose-animation-duration -float 0.1          # Speed up Mission Control animations
+
+# ⌨️ KEYBOARD & INPUT RESPONSIVENESS
+# defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false           # Enable key-repeat (crucial for VS Code Vim users)
+# defaults write NSGlobalDomain KeyRepeat -int 1                               # Set blistering fast key repeat rate
+# defaults write NSGlobalDomain InitialKeyRepeat -int 10                       # Set ultra-short delay until repeat starts
+
+# 🔊 AUDIO & SOUND EFFECTS
+# defaults write com.apple.sound.uiaudio audioEnabled -int 0                   # Disable user interface sound effects
+# defaults write NSGlobalDomain AppleShowAllExtensions -bool true               # Show all file extensions natively

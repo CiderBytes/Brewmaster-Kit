@@ -1,0 +1,19 @@
+# =============================================================================
+# DATA SCIENTIST OVERLAY
+# =============================================================================
+
+# --- IDEs & Environments ---
+cask "visual-studio-code"
+cask "anaconda"
+
+# --- Database & SQL ---
+cask "tableplus"
+cask "sqleditor"
+mas "Sequel Ace", id: 1518036000
+
+# --- CLI Tools ---
+brew "python"
+brew "jupyterlab"
+brew "r"
+brew "jq" # JSON processor
+brew "wget"

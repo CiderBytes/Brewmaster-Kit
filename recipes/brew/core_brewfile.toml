@@ -1,0 +1,47 @@
+# =============================================================================
+# CORE BASELINE BREWFILE
+# =============================================================================
+cask_args appdir: "/Applications"
+
+# --- Fonts ---
+cask "font-hack-nerd-font"
+cask "font-meslo-lg-nerd-font"
+
+# --- Core Utilities & System ---
+cask "1password"
+cask "1password-cli"
+cask "alfred"
+cask "betterzip"
+cask "daisydisk"
+cask "mac-mouse-fix"
+mas "Keka", id: 470158793
+mas "The Unarchiver", id: 425424353
+mas "Dropzone 4", id: 1485052491
+
+# --- Browsers & Communication ---
+cask "brave-browser"
+cask "google-chrome"
+cask "firefox"
+cask "slack"
+cask "zoom"
+
+# --- Productivity ---
+cask "obsidian"
+mas "Fantastical", id: 975937182
+mas "Drafts", id: 1435957248
+mas "Toggl Track", id: 1291898086
+
+# --- CLI & Terminal ---
+cask "iterm2"
+brew "git"
+brew "gnupg"
+brew "gnutls"
+brew "htop"
+brew "wget"
+brew "tree"
+brew "mas"
+brew "mise"
+brew "zsh"
+brew "bat"
+brew "fastfetch"
+brew "zoxide"

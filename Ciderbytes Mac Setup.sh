@@ -25,15 +25,68 @@
 # USER CONFIGURATION & DEFAULTS
 # =============================================================================
 # Modify these variables to point to your own repository files if you fork this kit.
-# These act as fallbacks if environment variables are not explicitly passed.
 
-REPO_BREWFILE_URL=${SETUP_BREWFILE_URL:-"https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/brewfile"}
-REPO_ZSHRC_URL=${SETUP_ZSHRC_URL:-"https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.zshrc"}
-REPO_P10K_URL=${SETUP_P10K_URL:-"https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/.p10k.zsh"}
+# Base Paths
+REPO_BASE_TARGET=${SETUP_BASE_TARGET:-"https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master"}
+REPO_P10K_TARGET=${SETUP_P10K_TARGET:-"$REPO_BASE_TARGET/recipes/shell/.p10k.zsh"}
+GITIGNORE_TARGET=${SETUP_GITIGNORE_TARGET:-"https://raw.githubusercontent.com/github/gitignore/main/Global/macOS.gitignore"}
 
-# System Paths & Logging
-LOG_FILE="$HOME/.brewmaster_setup.log"
-ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+# =============================================================================
+# BREWFILE RECIPES
+# =============================================================================
+CORE_BREW_TARGET=${SETUP_CORE_BREW:-"$REPO_BASE_TARGET/recipes/brew/core_brewfile.txt"}
+CATALOG_TARGET=${SETUP_CATALOG_TARGET:-"$REPO_BASE_TARGET/recipes/brew/catalog_brewfile.txt"}
+DEFAULT_MANIFEST_TARGET=${SETUP_MANIFEST_TARGET:-"$REPO_BASE_TARGET/recipes/brew/manifest.txt"}
+
+RECIPE_1_NAME=${SETUP_RECIPE_1_NAME:-"Software Developer"}
+RECIPE_1_TARGET=${SETUP_RECIPE_1_TARGET:-"$REPO_BASE_TARGET/recipes/brew/dev_brewfile.txt"}
+
+RECIPE_2_NAME=${SETUP_RECIPE_2_NAME:-"WordPress Developer"}
+RECIPE_2_TARGET=${SETUP_RECIPE_2_TARGET:-"$REPO_BASE_TARGET/recipes/brew/wp_brewfile.txt"}
+
+RECIPE_3_NAME=${SETUP_RECIPE_3_NAME:-"Content Creator"}
+RECIPE_3_TARGET=${SETUP_RECIPE_3_TARGET:-"$REPO_BASE_TARGET/recipes/brew/content_brewfile.txt"}
+
+RECIPE_4_NAME=${SETUP_RECIPE_4_NAME:-"Data Scientist"}
+RECIPE_4_TARGET=${SETUP_RECIPE_4_TARGET:-"$REPO_BASE_TARGET/recipes/brew/data_brewfile.txt"}
+
+# =============================================================================
+# MACOS PREFERENCE RECIPES
+# =============================================================================
+PREFS_CORE_TARGET=${SETUP_PREFS_CORE:-"$REPO_BASE_TARGET/recipes/prefs/core_prefs.txt"}
+PREFS_CATALOG_TARGET=${SETUP_PREFS_CATALOG:-"$REPO_BASE_TARGET/recipes/prefs/catalog_prefs.txt"}
+PREFS_MANIFEST_TARGET=${SETUP_PREFS_MANIFEST:-"$REPO_BASE_TARGET/recipes/prefs/manifest.txt"}
+
+PREFS_1_NAME=${SETUP_PREFS_1_NAME:-"Software Developer Prefs"}
+PREFS_1_TARGET=${SETUP_PREFS_1_TARGET:-"$REPO_BASE_TARGET/recipes/prefs/dev_prefs.txt"}
+
+PREFS_2_NAME=${SETUP_PREFS_2_NAME:-"WordPress Developer Prefs"}
+PREFS_2_TARGET=${SETUP_PREFS_2_TARGET:-"$REPO_BASE_TARGET/recipes/prefs/wp_prefs.txt"}
+
+PREFS_3_NAME=${SETUP_PREFS_3_NAME:-"Content Creator Prefs"}
+PREFS_3_TARGET=${SETUP_PREFS_3_TARGET:-"$REPO_BASE_TARGET/recipes/prefs/content_prefs.txt"}
+
+PREFS_4_NAME=${SETUP_PREFS_4_NAME:-"Data Scientist Prefs"}
+PREFS_4_TARGET=${SETUP_PREFS_4_TARGET:-"$REPO_BASE_TARGET/recipes/prefs/data_prefs.txt"}
+
+# =============================================================================
+# SHELL PROFILE RECIPES
+# =============================================================================
+SHELL_CORE_TARGET=${SETUP_SHELL_CORE:-"$REPO_BASE_TARGET/recipes/shell/core_zshrc.txt"}
+SHELL_MANIFEST_TARGET=${SETUP_SHELL_MANIFEST:-"$REPO_BASE_TARGET/recipes/shell/manifest.txt"}
+
+SHELL_1_NAME=${SETUP_SHELL_1_NAME:-"Software Developer Shell"}
+SHELL_1_TARGET=${SETUP_SHELL_1_TARGET:-"$REPO_BASE_TARGET/recipes/shell/dev_zshrc.txt"}
+
+SHELL_2_NAME=${SETUP_SHELL_2_NAME:-"WordPress Developer Shell"}
+SHELL_2_TARGET=${SETUP_SHELL_2_TARGET:-"$REPO_BASE_TARGET/recipes/shell/wp_zshrc.txt"}
+
+SHELL_3_NAME=${SETUP_SHELL_3_NAME:-"Content Creator Shell"}
+SHELL_3_TARGET=${SETUP_SHELL_3_TARGET:-"$REPO_BASE_TARGET/recipes/shell/content_zshrc.txt"}
+
+SHELL_4_NAME=${SETUP_SHELL_4_NAME:-"Data Scientist Shell"}
+SHELL_4_TARGET=${SETUP_SHELL_4_TARGET:-"$REPO_BASE_TARGET/recipes/shell/data_zshrc.txt"}
+
 
 # =============================================================================
 # GLOBAL HELPERS & INITIALIZATION
@@ -69,6 +122,385 @@ log_verbose() {
     echo "[$(date +'%H:%M:%S')] VERBOSE: $1" >> "$LOG_FILE"
 }
 
+# Global Helper: Determine best available text editor
+get_editor() {
+    if [[ -n "$EDITOR" ]]; then
+        echo "$EDITOR"
+    elif command -v code &> /dev/null; then
+        echo "code" # <--- Removed --wait so the terminal doesn't freeze
+    elif command -v nano &> /dev/null; then
+        echo "nano"
+    else
+        echo "vi"
+    fi
+}
+
+# Global Helper: Fetch URL or Local Path safely (Overwrites destination)
+fetch_target() {
+    local target="$1"
+    local dest="$2"
+    
+    if [[ "$target" == http* ]]; then
+        if ! curl -fsSL --output "$dest" "$target"; then
+            echo "❌ Error: Could not download $target."
+            return 1
+        fi
+    else
+        local local_file="${target/#\~/$HOME}"
+        if [[ -f "$local_file" ]]; then
+            cp "$local_file" "$dest"
+        else
+            echo "❌ Error: File not found at $local_file."
+            return 1
+        fi
+    fi
+}
+
+# Global Helper: Fetch file with auto-extension swap and interactive fallback
+fetch_core_with_fallback() {
+    local original_target="$1"
+    local dest="$2"
+    local core_name="$3"
+    local current_target="$original_target"
+    
+    while true; do
+        # Attempt 1: Try the exact target provided
+        if fetch_target "$current_target" "$dest"; then
+            echo "✅ $core_name loaded."
+            return 0
+        fi
+        
+        # Attempt 2: Auto-swap .txt and .toml
+        local alt_target=""
+        if [[ "$current_target" == *.txt ]]; then
+            alt_target="${current_target%.txt}.toml"
+        elif [[ "$current_target" == *.toml ]]; then
+            alt_target="${current_target%.toml}.txt"
+        fi
+        
+        if [[ -n "$alt_target" ]]; then
+            log_verbose "Original target failed. Trying alternative extension: $alt_target"
+            if fetch_target "$alt_target" "$dest"; then
+                echo "✅ $core_name loaded (using alternative extension)."
+                return 0
+            fi
+        fi
+        
+        # Both failed. Trigger the interactive fallback menu.
+        echo -e "\n⚠️ \033[1;33m$core_name could not be found (.txt or .toml).\033[0m"
+        echo "1. Enter a custom URL or local path"
+        echo "2. Continue without $core_name"
+        echo "3. Abort this phase"
+        
+        local fallback_choice
+        read "fallback_choice?Select option [1-3]: "
+        
+        if [[ "$fallback_choice" == "1" ]]; then
+            read "current_target?Enter custom path or URL: "
+            # Loop restarts with the new target
+        elif [[ "$fallback_choice" == "2" ]]; then
+            echo "⏭️ Proceeding without $core_name."
+            touch "$dest" # Ensures the file exists so downstream logic doesn't crash
+            return 0
+        else
+            echo "❌ Halting phase."
+            return 1
+        fi
+    done
+}
+
+# Global Helper: Append URL or Local Path safely (Does not overwrite)
+append_target() {
+    local target="$1"
+    local dest="$2"
+    
+    if [[ "$target" == http* ]]; then
+        if ! curl -fsSL "$target" >> "$dest"; then
+            echo "❌ Error: Could not download $target."
+            return 1
+        fi
+    else
+        local local_file="${target/#\~/$HOME}"
+        if [[ -f "$local_file" ]]; then
+            cat "$local_file" >> "$dest"
+        else
+            echo "❌ Error: File not found at $local_file."
+            return 1
+        fi
+    fi
+}
+
+# Global Helper: Fetch Catalog with auto-extension swap and interactive fallback
+append_catalog_with_fallback() {
+    local original_target="$1"
+    local dest="$2"
+    local catalog_name="$3"
+    local current_target="$original_target"
+    
+    while true; do
+        # Attempt 1: Try the exact target provided
+        if append_target "$current_target" "$dest"; then
+            echo "✅ $catalog_name appended."
+            return 0
+        fi
+        
+        # Attempt 2: Auto-swap .txt and .toml
+        local alt_target=""
+        if [[ "$current_target" == *.txt ]]; then
+            alt_target="${current_target%.txt}.toml"
+        elif [[ "$current_target" == *.toml ]]; then
+            alt_target="${current_target%.toml}.txt"
+        fi
+        
+        if [[ -n "$alt_target" ]]; then
+            log_verbose "Original target failed. Trying alternative extension: $alt_target"
+            if append_target "$alt_target" "$dest"; then
+                echo "✅ $catalog_name appended (using alternative extension)."
+                return 0
+            fi
+        fi
+        
+        # Both failed. Trigger the interactive fallback menu.
+        # Notice we only offer 2 options here, because Catalogs are optional (no need to abort phase).
+        echo -e "\n⚠️ \033[1;33m$catalog_name could not be found (.txt or .toml).\033[0m"
+        echo "1. Enter a custom URL or local path"
+        echo "2. Continue without $catalog_name"
+        
+        local fallback_choice
+        read "fallback_choice?Select option [1-2]: "
+        
+        if [[ "$fallback_choice" == "1" ]]; then
+            read "current_target?Enter custom path or URL: "
+            # Loop restarts with the new target
+        else
+            echo "⏭️ Proceeding without $catalog_name."
+            echo "# Catalog unavailable/skipped." >> "$dest"
+            return 0
+        fi
+    done
+}
+
+# Global Helper: Omni-Selector Menu Engine
+run_omni_selector() {
+    local mode="$1"
+    local target_file="$2"
+    
+    # Map variables dynamically based on the mode requested
+    local name_1 target_1 name_2 target_2 name_3 target_3 name_4 target_4
+    local manifest_target suffix core_file catalog_file
+    
+    if [[ "$mode" == "brew" ]]; then
+        name_1="$RECIPE_1_NAME"; target_1="$RECIPE_1_TARGET"
+        name_2="$RECIPE_2_NAME"; target_2="$RECIPE_2_TARGET"
+        name_3="$RECIPE_3_NAME"; target_3="$RECIPE_3_TARGET"
+        name_4="$RECIPE_4_NAME"; target_4="$RECIPE_4_TARGET"
+        manifest_target="$DEFAULT_MANIFEST_TARGET"
+        glob_pattern="*_brewfile.(txt|toml)"
+        core_file="core_brewfile"
+        catalog_file="catalog_brewfile"
+    elif [[ "$mode" == "prefs" ]]; then
+        name_1="$PREFS_1_NAME"; target_1="$PREFS_1_TARGET"
+        name_2="$PREFS_2_NAME"; target_2="$PREFS_2_TARGET"
+        name_3="$PREFS_3_NAME"; target_3="$PREFS_3_TARGET"
+        name_4="$PREFS_4_NAME"; target_4="$PREFS_4_TARGET"
+        manifest_target="$PREFS_MANIFEST_TARGET"
+        glob_pattern="*_prefs.(txt|toml)"
+        core_file="core_prefs"
+        catalog_file="catalog_prefs"
+    elif [[ "$mode" == "shell" ]]; then
+        name_1="$SHELL_1_NAME"; target_1="$SHELL_1_TARGET"
+        name_2="$SHELL_2_NAME"; target_2="$SHELL_2_TARGET"
+        name_3="$SHELL_3_NAME"; target_3="$SHELL_3_TARGET"
+        name_4="$SHELL_4_NAME"; target_4="$SHELL_4_TARGET"
+        manifest_target="$SHELL_MANIFEST_TARGET"
+        glob_pattern="*_zshrc.(txt|toml)"
+        core_file="core_zshrc"
+        catalog_file="catalog_zshrc"
+    fi
+
+    # Dynamic Menu Wording
+    if [[ "$mode" == "shell" ]]; then
+        echo -e "\n📦 Select a Base Shell Profile:"
+        echo "1. Default Core Base ($core_file)"
+    else
+        echo -e "\n📦 Select an optional overlay to add to the Core Base:"
+        echo "1. None (Core Base Only)"
+    fi
+    echo "2. $name_1"
+    echo "3. $name_2"
+    echo "4. $name_3"
+    echo "5. $name_4"
+    echo "6. Custom Recipe (Enter a direct URL or local path)"
+    echo "7. Scan Local Directory for Recipes"
+    echo "8. Select from a Manifest (URL or Local)"
+    
+    local choice
+    read "choice?Select option [1-8]: "
+    
+    # Internal function to process the file safely
+    apply_recipe() {
+        local dl_target="$1"
+        local dl_name="$2"
+        
+        # GitHub URL Auto-Correction for direct browser links
+        if [[ "$dl_target" == *"github.com"* && "$dl_target" == *"/blob/"* ]]; then
+            dl_target="${dl_target/github.com/raw.githubusercontent.com}"
+            dl_target="${dl_target/\/blob\//\/}"
+        fi
+        
+        # Helper to execute fetch (overwrite) or append based on mode
+        execute_transfer() {
+            local t="$1"
+            if [[ "$mode" == "shell" ]]; then
+                fetch_target "$t" "$target_file"
+            else
+                append_target "$t" "$target_file"
+            fi
+        }
+
+        if [[ "$mode" != "shell" ]]; then
+            echo -e "\n\n# --- OVERLAY: $dl_name ---" >> "$target_file"
+        fi
+        
+        # Attempt 1: Try the exact target provided
+        if execute_transfer "$dl_target"; then
+            echo "✅ $dl_name applied."
+            return 0
+        fi
+        
+        # Attempt 2: Auto-swap .txt and .toml
+        local alt_target=""
+        if [[ "$dl_target" == *.txt ]]; then
+            alt_target="${dl_target%.txt}.toml"
+        elif [[ "$dl_target" == *.toml ]]; then
+            alt_target="${dl_target%.toml}.txt"
+        fi
+        
+        if [[ -n "$alt_target" ]]; then
+            log_verbose "Original target failed. Trying alternative extension: $alt_target"
+            if execute_transfer "$alt_target"; then
+                echo "✅ $dl_name applied (using alternative extension)."
+                return 0
+            fi
+        fi
+        
+        echo "❌ Error: Could not reach $dl_target or its alternative. Skipping."
+    }
+
+    case $choice in
+        1) 
+            if [[ "$mode" == "shell" ]]; then
+                fetch_core_with_fallback "$SHELL_CORE_TARGET" "$target_file" "Core Shell Profile"
+            else
+                echo "✅ Proceeding with Core Base only."
+            fi
+            ;;
+        2) apply_recipe "$target_1" "$name_1" ;;
+        3) apply_recipe "$target_2" "$name_2" ;;
+        4) apply_recipe "$target_3" "$name_3" ;;
+        5) apply_recipe "$target_4" "$name_4" ;;
+        6)
+            read "custom_target?Enter the full path or URL to your custom file: "
+            apply_recipe "$custom_target" "CUSTOM"
+            ;;
+        7)
+            read "scan_dir?Enter local directory to scan (~/ is accepted): "
+            scan_dir="${scan_dir/#\~/$HOME}"
+            if [[ -d "$scan_dir" ]]; then
+                # Evaluates our dual-extension glob pattern
+                local files=($~scan_dir/$~glob_pattern(N))
+                
+                if [[ ${#files[@]} -gt 0 ]]; then
+                    echo -e "\n📂 Found the following recipes in $scan_dir:"
+                    local i=1
+                    local friendly_names=()
+                    local filtered_files=() 
+                    
+                    for f in "${files[@]}"; do
+                        local raw_name=$(basename "$f")
+                        
+                        # Skip core and catalog variants regardless of extension
+                        [[ "$raw_name" == "${core_file}.txt" || "$raw_name" == "${core_file}.toml" ]] && continue
+                        [[ "$raw_name" == "${catalog_file}.txt" || "$raw_name" == "${catalog_file}.toml" ]] && continue
+                        
+                        # Strip either .txt or .toml from the end, then strip the base suffix
+                        local base_name="${raw_name%.*}"
+                        local friendly_name=""
+                        if [[ "$mode" == "brew" ]]; then
+                            friendly_name="${base_name%_brewfile}"
+                        elif [[ "$mode" == "prefs" ]]; then
+                            friendly_name="${base_name%_prefs}"
+                        else
+                            friendly_name="${base_name%_zshrc}"
+                        fi
+                        
+                        friendly_names[$i]="$friendly_name"
+                        filtered_files[$i]="$f"
+                        echo "$i. ${(C)friendly_name}"
+                        ((i++))
+                    done
+                    
+                    read "file_choice?Select a recipe [1-$((${#friendly_names[@]}))]: "
+                    if [[ -n "${friendly_names[$file_choice]}" ]]; then
+                        apply_recipe "${filtered_files[$file_choice]}" "${(C)friendly_names[$file_choice]}" 
+                    else
+                        echo "❌ Invalid selection. Proceeding with Defaults."
+                    fi
+                else
+                    echo "❌ No matching recipe files found in $scan_dir. Proceeding with Defaults."
+                fi
+            else
+                echo "❌ Directory not found. Proceeding with Defaults."
+            fi
+            ;;
+        8)
+            read "manifest_loc?Enter manifest URL or local path [Default: $manifest_target]: "
+            manifest_loc=${manifest_loc:-$manifest_target}
+            
+            log_verbose "Reading manifest from $manifest_loc..."
+            if [[ "$manifest_loc" == http* ]]; then
+                manifest_content=$(curl -fsSL "$manifest_loc" 2>/dev/null)
+            else
+                manifest_content=$(cat "${manifest_loc/#\~/$HOME}" 2>/dev/null)
+            fi
+            
+            if [[ -n "$manifest_content" ]]; then
+                echo -e "\n📜 Recipes available in manifest:"
+                local i=1
+                local man_urls=()
+                local man_names=()
+                
+                while IFS='|' read -r man_url man_name; do
+                    [[ -z "$man_url" || "$man_url" == \#* ]] && continue
+                    man_name=${man_name:-"Unnamed Recipe"}
+                    echo "$i. $man_name"
+                    man_urls[$i]="$man_url"
+                    man_names[$i]="$man_name"
+                    ((i++))
+                done <<< "$manifest_content"
+                
+                read "man_choice?Select a recipe [1-$((${#man_urls[@]}))]: "
+                if [[ -n "${man_urls[$man_choice]}" ]]; then
+                    apply_recipe "${man_urls[$man_choice]}" "${man_names[$man_choice]}"
+                else
+                    echo "❌ Invalid selection. Proceeding with Defaults."
+                fi
+            else
+                echo "❌ Could not load manifest. Proceeding with Defaults."
+            fi
+            ;;
+        *)
+            if [[ "$mode" == "shell" ]]; then
+                fetch_core_with_fallback "$SHELL_CORE_TARGET" "$target_file" "Core Shell Profile"
+            else
+                echo "✅ Proceeding with Core Base only."
+            fi
+            ;;
+    esac
+}
+
+
+
 # =============================================================================
 # PHASE 1: SYSTEM PRE-REQUISITES
 # =============================================================================
@@ -103,13 +535,16 @@ phase_system() {
     # Rosetta 2 translates x86_64 (Intel) instructions to arm64 (Apple Silicon).
     # Some legacy background helpers and applications still require this to run.
     if [[ $(uname -m) == "arm64" ]]; then
-        log_verbose "Apple Silicon detected. Checking for Rosetta 2 LaunchDaemon..."
-        if [[ ! -f "/Library/Apple/System/Library/LaunchDaemons/com.apple.oahd.plist" ]]; then
+        log_verbose "Apple Silicon detected. Executing Rosetta 2 functional test..."
+        
+        # Functional test: Attempt to run a microscopic command under Intel architecture
+        if ! arch -x86_64 /usr/bin/true 2>/dev/null; then
             echo -e "\n📦 Installing Rosetta 2 for Intel app compatibility..."
             sudo softwareupdate --install-rosetta --agree-to-license 2>&1 | tee -a "$LOG_FILE"
             echo "✅ Rosetta 2 installation completed."
         else
             echo -e "\n✅ Rosetta 2 is already installed."
+            log_verbose "Rosetta 2 functional test passed successfully."
         fi
     fi
 
@@ -184,65 +619,44 @@ phase_brew() {
     open -a /System/Applications/App\ Store.app
     read "?Press [Enter] after confirming you are signed into the App Store..."
 
-    # 4. Brewfile Sourcing and Routing
-    # Defines where the script should pull the list of apps to install.
-    echo -e "\n📦 Brewfile Configuration"
-    echo "Choose your Brewfile source:"
-    echo "1. Default hosted Brewfile (from configured repository)"
-    echo "2. Local Brewfile (specify file path)"
-    echo "3. Alternative hosted Brewfile (specify URL)"
+    # 4. Workstation Recipe Selection & Assembly
+    echo -e "\n📦 Workstation Recipe Selection"
+    BREWFILE_PATH="$HOME/Brewfile"
     
-    brewfile_choice=${SETUP_BREWFILE_CHOICE:-$(read -e "choice?Select option [1/2/3]: " && echo $REPLY)}
+    # ---------------------------------------------------------
+    # CORE BASELINE FETCH (Supports HTTP or Local Path)
+    # ---------------------------------------------------------
+    local core_target="$REPO_RECIPES_TARGET/core_brewfile.txt"
+    log_verbose "Fetching core base from $core_target..."
     
-    case $brewfile_choice in
-        1)
-            BREWFILE_PATH="$HOME/Brewfile"
-            log_verbose "Downloading from $REPO_BREWFILE_URL..."
-            curl -fsSL --output "$BREWFILE_PATH" "$REPO_BREWFILE_URL"
-            echo "✅ Downloaded default hosted Brewfile."
-            ;;
-        2)
-            read "local_path?Enter the full path to your local Brewfile: "
-            # Handles bash-style tilde expansion to absolute home path
-            BREWFILE_PATH="${local_path/#\~/$HOME}"
-            if [[ "$BREWFILE_PATH" != "$HOME/Brewfile" ]]; then
-                log_verbose "Copying $BREWFILE_PATH to $HOME/Brewfile..."
-                cp "$BREWFILE_PATH" "$HOME/Brewfile"
-                BREWFILE_PATH="$HOME/Brewfile"
-            fi
-            echo "✅ Using local Brewfile."
-            ;;
-        3)
-            read "custom_url?Enter the URL to your hosted Brewfile: "
-            BREWFILE_PATH="$HOME/Brewfile"
-            log_verbose "Downloading from custom URL: $custom_url..."
-            curl -fsSL --output "$BREWFILE_PATH" "$custom_url"
-            echo "✅ Downloaded custom hosted Brewfile."
-            ;;
-        *)
-            echo "❌ Invalid selection. Using default hosted Brewfile"
-            BREWFILE_PATH="$HOME/Brewfile"
-            curl -fsSL --output "$BREWFILE_PATH" "$REPO_BREWFILE_URL"
-            ;;
-    esac
+    if ! fetch_core_with_fallback "$core_target" "$BREWFILE_PATH" "Core Base blueprint"; then
+        return 1
+    fi
+    echo "✅ Core Base blueprint loaded."
+    
+    # ---------------------------------------------------------
+    # OMNI-SELECTOR MENU
+    # ---------------------------------------------------------
+    run_omni_selector "brew" "$BREWFILE_PATH"
+
+    # =========================================================================
+    # CATALOG INJECTION: Append the master optional catalog (HTTP or Local)
+    # =========================================================================
+    log_verbose "Fetching master catalog from $CATALOG_TARGET..."
+    echo -e "\n\n# =====================================================================" >> "$BREWFILE_PATH"
+    echo "# 📚 MASTER CATALOG (Remove the '#' to install any optional software)" >> "$BREWFILE_PATH"
+    echo "# =====================================================================" >> "$BREWFILE_PATH"
+    
+    append_catalog_with_fallback "$CATALOG_TARGET" "$BREWFILE_PATH" "Master Brew Catalog"
 
     # 5. Brewfile Review & Editing
     # Allows last-minute adjustments to the Brewfile before kicking off the long install process.
     if [[ -z "$SETUP_SKIP_BREWFILE_EDIT" ]]; then
-        read "edit_brewfile?Would you like to review/edit the Brewfile before installation? [y/N] "
+        read "edit_brewfile?Would you like to review/edit the final Brewfile before installation? [y/N] "
         if [[ "$edit_brewfile" =~ ^[Yy]$ ]]; then
-            # Determine best available editor
-            if [[ -n "$EDITOR" ]]; then
-                editor="$EDITOR"
-            elif command -v code &> /dev/null; then
-                editor="code"
-            elif command -v nano &> /dev/null; then
-                editor="nano"
-            else
-                editor="vi"
-            fi
-            echo "📝 Opening Brewfile in $editor..."
-            $editor "$BREWFILE_PATH"
+            editor=$(get_editor)
+            echo "📝 Opening file in $editor..."
+            eval "$editor \"$BREWFILE_PATH\""
             read "?Press [Enter] to continue with installation..."
         fi
     fi
@@ -250,6 +664,8 @@ phase_brew() {
     # 6. Brew Bundle Installation
     # Reads the Brewfile and installs all requested formulae, casks, and MAS apps.
     echo -e "\n⏳ Starting application installation process from Brewfile..."
+    echo -e "⚠️  Note: Mac App Store (MAS) downloads do not show a progress bar in the terminal."
+    echo -e "   To check download progress for MAS apps, open Launchpad or the App Store app."
     if brew bundle check --file="$BREWFILE_PATH"; then
         echo "✅ All Brewfile dependencies are already satisfied."
     else
@@ -262,6 +678,8 @@ phase_brew() {
     # Ensures zsh can properly tab-complete homebrew commands without security warnings.
     log_verbose "Setting proper write permissions on Homebrew share directory for zsh completion..."
     chmod -R go-w "$HOMEBREW_PREFIX/share" 2>/dev/null || true
+    echo "🧹 Cleaning up Homebrew caches..."
+    brew cleanup 2>&1 | tee -a "$LOG_FILE"
 }
 
 # =============================================================================
@@ -334,8 +752,8 @@ EOF
     # Prevents .DS_Store and other Apple-specific hidden files from cluttering repositories globally.
     if [[ ! -f ~/.gitignore ]]; then
         echo -e "\n📥 Downloading macOS-specific gitignore file..."
-        log_verbose "Fetching from github/gitignore repository..."
-        curl -fsSL https://raw.githubusercontent.com/github/gitignore/main/Global/macOS.gitignore -o ~/.gitignore
+        log_verbose "Fetching gitignore from configured URL: $GITIGNORE_TARGET..."
+        curl -fsSL "$GITIGNORE_TARGET" -o ~/.gitignore
         git config --global core.excludesfile ~/.gitignore
     fi
 
@@ -369,96 +787,130 @@ EOF
     git config --global credential.helper osxkeychain
     git config --global core.editor "code --wait"
 }
-
 # =============================================================================
 # PHASE 4: SHELL & TERMINAL
 # =============================================================================
 phase_shell() {
     print_header "Phase 4: Shell Architecture & Terminal Utilities"
 
-    # 1. Oh My Zsh Installation
-    if [[ ! -d ~/.oh-my-zsh ]]; then
-        echo -e "\n📦 Installing Oh My Zsh framework..."
-        # RUNZSH=no prevents the installer from automatically switching the active shell,
-        # which would halt the execution of the rest of this setup script.
-        log_verbose "Running OMZ install script with RUNZSH=no..."
-        RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 2>&1 | tee -a "$LOG_FILE"
-    else
-        echo -e "\n✅ Oh My Zsh is already installed."
-    fi
+    # 1. Strategy Selection
+    echo -e "\n🐚 Shell & Terminal Configuration Strategy"
+    echo "1. Standard Setup (Default: Oh My Zsh, P10k Theme, & Premium Plugins)"
+    echo "2. Custom Setup (Step-by-step manual selection)"
+    echo "3. Vanilla Zsh (Skip all frameworks and themes)"
+    read "shell_strategy?Select an option [1-3]: "
 
-    # 2. Shell Configuration & Theming
-    echo "📝 Installing custom .zshrc and Powerlevel10k configuration..."
-    # Backup existing configuration to prevent accidental data loss
-    [[ -f ~/.zshrc ]] && mv ~/.zshrc ~/.zshrc.bak.$(date +%Y%m%d_%H%M%S)
-    
-    log_verbose "Downloading .zshrc and .p10k.zsh from configured repository..."
-    curl -fsSL "$REPO_ZSHRC_URL" > ~/.zshrc
-    curl -fsSL "$REPO_P10K_URL" > ~/.p10k.zsh
+    local INSTALL_OMZ=0
+    local INSTALL_PLUGINS=0
+    local INSTALL_P10K=0
 
-    # 3. Zsh Plugins
-    echo -e "\n🔌 Sourcing custom Zsh plugins..."
-    
-    # Install zsh-autosuggestions: Uses shell history to suggest completions as you type
-    log_verbose "Checking zsh-autosuggestions..."
-    [[ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]] && git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" -q
-    
-    # Install zsh-syntax-highlighting: Highlights valid vs invalid commands in red/green
-    log_verbose "Checking zsh-syntax-highlighting..."
-    [[ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting" ]] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting" -q
-    
-    # Install z: Learns your cd history so you can jump to directories by name
-    log_verbose "Checking z directory jumper..."
-    [[ ! -d "$ZSH_CUSTOM_DIR/plugins/z" ]] && git clone https://github.com/rupa/z.git "$ZSH_CUSTOM_DIR/plugins/z" -q
-    
-    # Update all custom plugins to latest versions
-    echo "🔄 Updating all custom plugins..."
-    for plugin in "$ZSH_CUSTOM_DIR"/plugins/*/; do
-        if [[ -d "$plugin/.git" ]]; then
-            plugin_name=$(basename "$plugin")
-            log_verbose "Git pulling latest for $plugin_name..."
-            git -C "$plugin" pull -q
+    case "$shell_strategy" in
+        2)
+            read "opt_omz?Install Oh My Zsh framework? [Y/n] "
+            [[ "${opt_omz:-Y}" =~ ^[Yy]$ ]] && INSTALL_OMZ=1
+            
+            read "opt_plugins?Install Premium Plugins (Autosuggestions, Syntax Highlighting, Zoxide)? [Y/n] "
+            [[ "${opt_plugins:-Y}" =~ ^[Yy]$ ]] && INSTALL_PLUGINS=1
+            
+            read "opt_p10k?Install Powerlevel10k theme? [Y/n] "
+            [[ "${opt_p10k:-Y}" =~ ^[Yy]$ ]] && INSTALL_P10K=1
+            ;;
+        3)
+            echo "⏭️ Proceeding with Vanilla Zsh (No frameworks or themes)."
+            ;;
+        *)
+            echo "✅ Proceeding with Standard Setup."
+            INSTALL_OMZ=1
+            INSTALL_PLUGINS=1
+            INSTALL_P10K=1
+            ;;
+    esac
+
+    # 2. Framework & Package Installation
+    if [[ $INSTALL_OMZ -eq 1 ]]; then
+        if [[ ! -d ~/.oh-my-zsh ]]; then
+            echo -e "\n📦 Installing Oh My Zsh framework..."
+            log_verbose "Running OMZ install script with RUNZSH=no..."
+            RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 2>&1 | tee -a "$LOG_FILE"
+        else
+            echo -e "\n✅ Oh My Zsh is already installed."
         fi
-    done
-
-    # 4. Universal Version Manager (mise)
-    # Replaces individual managers like nvm, pyenv, rbenv, etc., with a single rust-based binary
-    echo -e "\n📦 Setting up 'mise' (Universal Version Manager)..."
-    if ! command -v mise &> /dev/null; then
-        log_verbose "Installing mise via Homebrew..."
-        brew install mise 2>&1 | tee -a "$LOG_FILE"
     fi
-    
-    # Ensure mise initializes cleanly in our zshrc
-    if ! grep -q 'mise activate zsh' ~/.zshrc 2>/dev/null; then
-        log_verbose "Injecting mise initialization string into ~/.zshrc..."
-        cat >> ~/.zshrc << 'EOF'
 
-# Initialize mise (Universal Version Manager)
-eval "$(mise activate zsh)"
+    if [[ $INSTALL_P10K -eq 1 ]]; then
+        echo -e "\n🎨 Installing Powerlevel10k theme via Homebrew..."
+        brew install romkatv/powerlevel10k/powerlevel10k 2>&1 | tee -a "$LOG_FILE"
+    fi
+
+    if [[ $INSTALL_PLUGINS -eq 1 ]]; then
+        echo -e "\n🔌 Installing shell plugins..."
+        log_verbose "Installing zsh-syntax-highlighting via brew..."
+        brew install zsh-syntax-highlighting 2>&1 | tee -a "$LOG_FILE"
+
+        log_verbose "Cloning OMZ-native plugins..."
+        [[ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]] && git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" -q
+        [[ ! -d "$ZSH_CUSTOM_DIR/plugins/z" ]] && git clone https://github.com/rupa/z.git "$ZSH_CUSTOM_DIR/plugins/z" -q
+
+        # Update OMZ custom plugins if they already existed
+        for plugin in "$ZSH_CUSTOM_DIR"/plugins/*/; do
+            if [[ -d "$plugin/.git" ]]; then
+                log_verbose "Git pulling latest for $(basename "$plugin")..."
+                git -C "$plugin" pull -q
+            fi
+        done
+    fi
+
+    # 3. Backup & Profile Selection
+    ZSHRC_PATH="$HOME/.zshrc"
+    if [[ -f "$ZSHRC_PATH" ]]; then
+        echo -e "\n💾 Backing up existing .zshrc..."
+        mv "$ZSHRC_PATH" "$ZSHRC_PATH.bak.$(date +%Y%m%d_%H%M%S)"
+    fi
+
+    # The Omni-Selector now handles fetching the core profile OR overwriting it with a custom choice
+    run_omni_selector "shell" "$ZSHRC_PATH"
+
+    # 4. Dynamic System Injections  
+    echo -e "\n💻 Applying dynamic environment hooks..."
+    echo -e "\n# =====================================================================" >> "$ZSHRC_PATH"
+    echo "# ⚡ DYNAMIC SYSTEM HOOKS (Auto-Generated by Brewmaster)" >> "$ZSHRC_PATH"
+    echo "# =====================================================================" >> "$ZSHRC_PATH"
+
+    HOMEBREW_PREFIX=$(brew --prefix 2>/dev/null || echo "/opt/homebrew")
+
+    if [[ $INSTALL_P10K -eq 1 ]]; then
+        log_verbose "Injecting Powerlevel10k hook..."
+        cat >> "$ZSHRC_PATH" << EOF
+
+# Load Powerlevel10k Theme
+source "$HOMEBREW_PREFIX/opt/powerlevel10k/powerlevel10k.zsh-theme"
 EOF
-        echo "✅ mise configured in shell profile."
-    else
-        echo "✅ mise is already configured in shell profile."
+        echo -e "\n🎨 Fetching Powerlevel10k Theme Configuration..."
+        fetch_core_with_fallback "$REPO_P10K_TARGET" "$HOME/.p10k.zsh" "Powerlevel10k Config"
     fi
 
-    # 5. Visual Studio Code Path Integration
-    echo -e "\n💻 Configuring Visual Studio Code..."
+    if [[ $INSTALL_PLUGINS -eq 1 ]]; then
+        log_verbose "Injecting syntax-highlighting hook..."
+        cat >> "$ZSHRC_PATH" << EOF
 
-    # Add VS Code 'code' command to PATH so you can type `code .` to open a directory
-    if ! grep -q "Visual Studio Code" ~/.zshrc 2>/dev/null; then
-        echo -e "\n💻 Adding Visual Studio Code CLI to PATH..."
-        log_verbose "Injecting VS Code binary path into ~/.zshrc..."
-        cat >> ~/.zshrc << 'EOF'
-
-# Add Visual Studio Code (code) command to PATH
-export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+# Load Homebrew zsh-syntax-highlighting
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 EOF
-        echo "✅ VS Code command line tool configured"
     fi
 
-    # 6. Mackup Restore (DEPRECATED: Legacy Application Settings - will be removed in future versions)
-    # Mackup syncs application preferences via iCloud. It is heavily broken on macOS 14+.
+    # Universal Version Manager (mise) Hook
+    if command -v mise &> /dev/null; then
+        log_verbose "Injecting mise initialization string..."
+        echo -e "\n# Initialize mise (Universal Version Manager)\neval \"\$(mise activate zsh)\"" >> "$ZSHRC_PATH"
+    fi
+
+    # Visual Studio Code Path Integration
+    if [[ -d "/Applications/Visual Studio Code.app" ]]; then
+        log_verbose "Injecting VS Code binary path..."
+        echo -e "\n# Add Visual Studio Code (code) command to PATH\nexport PATH=\"/Applications/Visual Studio Code.app/Contents/Resources/app/bin:\$PATH\"" >> "$ZSHRC_PATH"
+    fi
+
+    # 5. Mackup Restore (Legacy Application Settings)
     macos_major=$(sw_vers -productVersion | cut -d. -f1)
     if [[ $macos_major -lt 14 ]]; then
         echo -e "\n💾 Mackup Configuration Restore"
@@ -477,6 +929,8 @@ EOF
             fi
         fi
     fi
+
+    echo "✅ Shell profile assembly complete."
 }
 
 # =============================================================================
@@ -485,69 +939,85 @@ EOF
 phase_macos() {
     print_header "Phase 5: macOS System & Development Preferences"
 
-    # 1. Finder Preferences
-    echo "📁 Configuring Finder..."
+    PREFS_FILE_PATH="$HOME/.macos_prefs_manifest.toml"
+    
+    echo -e "\n⚙️ Fetching macOS Core Preferences..."
+    
+    # 1. Fetch Core Preferences
+    if ! fetch_core_with_fallback "$PREFS_CORE_TARGET" "$PREFS_FILE_PATH" "Core Preferences blueprint"; then
+        return 1
+    fi
+    echo "✅ Core preferences loaded."
 
-    # Enable text selection in Quick Look previews
-    defaults write com.apple.finder QLEnableTextSelection -bool true
-    # Set Finder to use column view by default (better for development)
-    defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
-    # Set new Finder windows to open in home directory
-    defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME"
-    # Disable file extension change warnings (useful for development)
-    defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-    
-    # 2. Dock Preferences
-    echo "🚢 Configuring Dock..."
-    
-    # Enable Dock auto-hide for more screen space
-    defaults write com.apple.dock autohide -bool true
-    # Remove auto-hide delay for instant appearance
-    defaults write com.apple.dock autohide-delay -float 0
-    # Speed up auto-hide animation
-    defaults write com.apple.dock autohide-time-modifier -float 0.5
-    # Position Dock on the left side for more vertical space
-    defaults write com.apple.dock orientation -string "left"
-    
-    # 3. Screenshot Preferences
-    echo "📸 Configuring Screenshots..."
-    
-    # Create Screenshots folder on Desktop
-    mkdir -p ~/Desktop/Screenshots
-    # Set screenshot save location to Screenshots folder
-    defaults write com.apple.screencapture location ~/Desktop/Screenshots
-    # Set screenshot format to PNG (better quality than JPEG)
-    defaults write com.apple.screencapture type -string "png"
-    
-    # 4. Safari Developer Preferences
-    echo "🌐 Configuring Safari for development..."
+    # 2. Call the Global Omni-Selector
+    echo -e "\n📦 macOS Preference Recipe Selection"
+    run_omni_selector "prefs" "$PREFS_FILE_PATH"
 
-    # Enable Safari's internal debug menu
-    defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-    # Enable Safari's Develop menu
-    defaults write com.apple.Safari IncludeDevelopMenu -bool true
-    # Enable Web Inspector in Safari
-    defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-    # Allow hitting the Backspace key to go to the previous page in history
-    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+    # 3. Catalog Injection
+    log_verbose "Fetching master prefs catalog from $PREFS_CATALOG_TARGET..."
+    echo -e "\n\n# =====================================================================" >> "$PREFS_FILE_PATH"
+    echo "# 📚 MASTER PREFS CATALOG (Remove the '#' to apply optional settings)" >> "$PREFS_FILE_PATH"
+    echo "# =====================================================================" >> "$PREFS_FILE_PATH"
     
-    # 5. Chrome Preferences
-    echo "🌐 Configuring Chrome..."
+    append_catalog_with_fallback "$PREFS_CATALOG_TARGET" "$PREFS_FILE_PATH" "Master Prefs Catalog"
 
-    # Disable annoying backswipe navigation in Chrome
-    defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+    # 4. Review & Edit
+    if [[ -z "$SETUP_SKIP_PREFS_EDIT" ]]; then
+        echo -e "\n📖 The macOS Preferences Manifest is ready."
+        read "edit_prefs?Would you like to review/edit the preferences before applying? [Y/n] "
+        if [[ "${edit_prefs:-Y}" =~ ^[Yy]$ ]]; then
+            editor=$(get_editor)
+            echo "📝 Opening file in $editor..."
+            eval "$editor \"$PREFS_FILE_PATH\""
+            read "?Press [Enter] to continue and apply preferences..."
+        fi
+    fi
+
+    # 5. The Procedural Parser (Safe Execution Engine)
+    echo -e "\n⏳ Applying selected macOS preferences..."
     
-    # 6. Apply Changes
+    local applied_count=0
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Strip leading whitespace
+        line="${line#"${line%%[![:space:]]*}"}"
+        
+        # Skip empty lines and comments
+        [[ -z "$line" || "$line" == \#* ]] && continue
+        
+        # SECURITY GUARD: Only execute valid `defaults` commands
+        if [[ "$line" == defaults* ]]; then
+            log_verbose "Executing: $line"
+            eval "$line" 
+            ((applied_count++))
+        else
+            log_verbose "⚠️ Ignored invalid/unauthorized command: $line"
+        fi
+    done < "$PREFS_FILE_PATH"
+
+    # 6. Interactive System Preferences
+    echo -e "\n📸 Standalone Preferences"
+    read "setup_screenshots?Would you like screenshots to automatically save to a 'Screenshots' folder on your Desktop? [Y/n] "
+    # If setup_screenshots is empty (user hit Enter), substitute 'Y' as the default
+    if [[ "${setup_screenshots:-Y}" =~ ^[Yy]$ ]]; then
+        log_verbose "Creating ~/Desktop/Screenshots and updating defaults..."
+        mkdir -p ~/Desktop/Screenshots
+        defaults write com.apple.screencapture location ~/Desktop/Screenshots
+        echo "✅ Screenshot location updated."
+    fi
+
+    # 7. Apply Changes & Cleanup
+    echo "✅ $applied_count text-based preferences applied."
     echo "🔄 Restarting affected system UI processes..."
-    log_verbose "Killing Finder, Dock, and SystemUIServer to apply 'defaults' changes..."
-    killall Finder 2>/dev/null || true
-    killall Dock 2>/dev/null || true
-    killall SystemUIServer 2>/dev/null || true
+    log_verbose "Killing Finder, Dock, and SystemUIServer..."
+    killall Finder Dock SystemUIServer 2>/dev/null || true
     
-    echo "🧹 Cleaning up Homebrew caches..."
-    brew cleanup 2>&1 | tee -a "$LOG_FILE"
+    # Cleanup the manifest file
+    rm -f "$PREFS_FILE_PATH"
+    
+    
 }
+
+
 
 # =============================================================================
 # ORCHESTRATOR / EXECUTION CONTROLLER
@@ -596,9 +1066,14 @@ echo -e "\033[1;36m1.\033[0m 🔄 Restart your computer to ensure all changes ta
 echo -e "\033[1;36m2.\033[0m 🐚 Open a new terminal and run: \033[1;31momz update\033[0m"
 echo -e "\033[1;36m3.\033[0m 🎨 Configure iTerm2/Terminal font to 'MesloLGS NF' for proper theme display."
 echo -e "\033[1;36m4.\033[0m 💻 Set VS Code terminal font to 'MesloLGS NF' in settings."
-echo -e "\033[1;36m5.\033[0m ⚡ Run \033[1;31mp10k configure\033[0m to customize your terminal theme."
-echo -e "\n📑 \033[1;34mExecution log saved to:\033[0m $LOG_FILE"
 
+# Dynamic Powerlevel10k Wizard Check
+HOMEBREW_PREFIX=$(brew --prefix 2>/dev/null || echo "/opt/homebrew")
+if [[ -d "$HOMEBREW_PREFIX/opt/powerlevel10k" && ! -f "$HOME/.p10k.zsh" ]]; then
+    echo -e "\033[1;36m5.\033[0m ⚡ Run \033[1;31mp10k configure\033[0m to run the terminal theme configuration wizard."
+fi
+
+echo -e "\n📑 \033[1;34mExecution log saved to:\033[0m $LOG_FILE"
 echo -e "\n🎯 \033[1;33mYour modular development environment is now ready!\033[0m"
 
 echo "--- Brewmaster Setup Completed: $(date) ---" >> "$LOG_FILE"

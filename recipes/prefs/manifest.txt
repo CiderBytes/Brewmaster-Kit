@@ -1,0 +1,8 @@
+# ==========================================================
+# BREWMASTER: MACOS PREFS MANIFEST
+# Format: URL_OR_PATH|DISPLAY_NAME
+# ==========================================================
+
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/prefs/dev_prefs.txt|Software Developer Prefs
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/prefs/wp_prefs.txt|WordPress Developer Prefs
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/prefs/content_prefs.txt|Content Creator Prefs

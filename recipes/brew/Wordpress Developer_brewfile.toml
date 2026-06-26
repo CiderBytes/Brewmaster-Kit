@@ -1,0 +1,17 @@
+# =============================================================================
+# WORDPRESS DEVELOPER OVERLAY
+# =============================================================================
+
+# --- Local Environments ---
+cask "local"
+cask "wordpresscom-studio"
+
+# --- FTP & Database Tools ---
+cask "transmit"
+cask "tableplus"
+cask "sqleditor"
+mas "Sequel Ace", id: 1518036000
+
+# --- Supporting Tools ---
+cask "visual-studio-code"
+brew "imagemagick"

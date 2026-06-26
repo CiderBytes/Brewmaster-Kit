@@ -1,0 +1,33 @@
+# =============================================================================
+# SOFTWARE DEVELOPER OVERLAY
+# =============================================================================
+
+# --- IDEs & Code Editors ---
+cask "visual-studio-code"
+cask "sublime-text"
+mas "Xcode", id: 497799835
+mas "Playgrounds", id: 1496833156
+
+# --- Development Tools ---
+cask "github"
+cask "tower"
+cask "orbstack"          # Lightweight Docker/Linux alternative
+cask "utm"               # Virtual machines
+cask "dash"              # API Documentation
+cask "bruno"             # API Client
+mas "SSH Copy", id: 823961613
+
+# --- QuickLook Plugins (For Devs) ---
+cask "provisionql"
+cask "qlcolorcode"
+cask "qlmarkdown"
+cask "suspicious-package"
+
+# --- CLI Utilities ---
+brew "ack"
+brew "lazygit"
+brew "lnav"
+brew "httpie"
+brew "pkg-config"
+brew "pnpm"
+brew "tmux"

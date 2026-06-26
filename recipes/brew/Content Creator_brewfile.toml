@@ -1,0 +1,33 @@
+# =============================================================================
+# CONTENT CREATOR OVERLAY
+# =============================================================================
+
+# --- Video Editing & Production ---
+mas "Final Cut Pro", id: 424389933
+mas "Compressor", id: 424390742
+mas "Motion", id: 434290957
+mas "iMovie", id: 408981434
+cask "obs"
+cask "insta360-studio"
+mas "GoPro Quik", id: 561350520
+mas "GoPro Player", id: 1460836908
+
+# --- Audio & Streaming ---
+cask "loopback"
+cask "fission"
+cask "elgato-stream-deck"
+cask "elgato-wave-link"
+cask "macwhisper"
+
+# --- Design & Media Utilities ---
+cask "affinity"
+cask "handbrake-app"
+cask "vlc"
+cask "wondershare-uniconverter"
+
+# --- CLI Media Tools ---
+brew "exiftool"
+brew "imagemagick"
+brew "libheif"
+brew "yt-dlp"
+brew "pandoc"

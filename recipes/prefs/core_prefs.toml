@@ -1,0 +1,67 @@
+# =============================================================================
+# MACOS CORE PREFERENCES RECIPE
+# =============================================================================
+# Leave lines uncommented to apply them.
+# Add a '#' to the beginning of any 'defaults write' line to disable it.
+
+# ====================================================
+# FINDER
+# ====================================================
+# Enable text selection in Quick Look previews
+defaults write com.apple.finder QLEnableTextSelection -bool true
+
+# Set Finder to use column view by default (better for development)
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+
+# Set new Finder windows to open in home directory
+defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME"
+
+# Disable file extension change warnings (useful for development)
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# ====================================================
+# DOCK & MISSION CONTROL
+# ====================================================
+# Enable Dock auto-hide for more screen space
+defaults write com.apple.dock autohide -bool true
+
+# Remove auto-hide delay for instant appearance
+defaults write com.apple.dock autohide-delay -float 0
+
+# Speed up auto-hide animation
+defaults write com.apple.dock autohide-time-modifier -float 0.5
+
+# Position Dock on the left side for more vertical space
+defaults write com.apple.dock orientation -string "left"
+
+# ====================================================
+# SCREENSHOTS
+# ====================================================
+# Set screenshot format to PNG (better quality than JPEG)
+defaults write com.apple.screencapture type -string "png"
+
+# Set screenshot save location to a Screenshots folder on the Desktop
+# (Note: See the orchestrator script note below regarding the folder creation)
+defaults write com.apple.screencapture location ~/Desktop/Screenshots
+
+# ====================================================
+# SAFARI (DEVELOPER)
+# ====================================================
+# Enable Safari's internal debug menu
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+# Enable Safari's Develop menu
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+
+# Enable Web Inspector in Safari
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+
+# Allow hitting the Backspace key to go to the previous page in history
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+
+# ====================================================
+# GOOGLE CHROME
+# ====================================================
+# Disable annoying backswipe navigation in Chrome
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false

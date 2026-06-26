@@ -1,0 +1,140 @@
+# =============================================================================
+# 🏪 BREWMASTER MASTER CATALOG: OPTIONAL APPLICATIONS & UTILITIES
+# =============================================================================
+# INSTRUCTIONS: To install any item below, simply delete the '#' character 
+# from the beginning of that line during the Brewfile edit prompt.
+
+# ====================================================
+# HOMEBREW PACKAGES (CLI Tools & Libraries)
+# ====================================================
+# brew "mackup"
+# brew "mcfly"
+# brew "mosquitto"
+# brew "node"
+# brew "nvm"
+# brew "openssl@3"
+# brew "shared-mime-info"
+# brew "speedtest-cli"
+# brew "telnet"
+# brew "the_silver_searcher"
+# brew "tlrc"
+
+# ====================================================
+# HOMEBREW CASKS (macOS Applications)
+# ====================================================
+# cask "airfoil"
+# cask "arduino-ide"
+# cask "audio-hijack"
+# cask "balenaetcher"
+# cask "bettertouchtool"
+# cask "cheatsheet"
+# cask "choosy"
+# cask "chronosync"
+# cask "cocoarestclient"
+# cask "deltawalker"
+# cask "devonthink"
+# cask "discord"
+# cask "discord@canary"
+# cask "fantasy-grounds"
+# cask "farrago"
+# cask "fluid"
+# cask "gcloud-cli"
+# cask "insomnia"
+# cask "lulu"
+# cask "mailplane"
+# cask "micro-snitch"
+# cask "netspot"
+# cask "omniplan"
+# cask "openemu"
+# cask "openvpn-connect"
+# cask "paw"
+# cask "piezo"
+# cask "platypus"
+# cask "plex"
+# cask "pluralsight"
+# cask "postman"
+# cask "powershell"
+# cask "product-hunt"
+# cask "qfinder-pro"
+# cask "quicklook-json" # (Note: Marked as unsupported in original config)
+# cask "signal"
+# cask "spotify"
+# cask "steam"
+# cask "streamlabs-obs"
+# cask "tor-browser"
+# cask "trophy"
+# cask "valentina-studio"
+# cask "vmware-fusion"
+# cask "webots"
+
+# ====================================================
+# MAC APP STORE (MAS)
+# ====================================================
+# mas "1Blocker", id: 1107421413
+# mas "Actions", id: 1586435171
+# mas "AJA System Test Lite", id: 1092006274
+# mas "Apple Configurator", id: 1037126344
+# mas "Bear", id: 1091189122
+# mas "Bee", id: 726099620
+# mas "Blackmagic Disk Speed Test", id: 425264550
+# mas "Bridge Constructor Portal", id: 1316061122
+# mas "CamControl", id: 1503271162
+# mas "Core Tunnel", id: 1354318707
+# mas "Dark Reader for Safari", id: 1438243180
+# mas "Decked Builder Lite", id: 406317734
+# mas "Display Menu", id: 549083868
+# mas "Divvy", id: 413857545
+# mas "DuckDuckGo Privacy for Safari", id: 1482920575
+# mas "DuckDuckGo", id: 663592361
+# mas "EasyFind", id: 411673888
+# mas "Encrypto", id: 935235287
+# mas "GarageBand", id: 682658836
+# mas "Geekbench 4", id: 1175706108
+# mas "Geekbench 5", id: 1478447657
+# mas "GIF Keyboard", id: 1043270657
+# mas "Gifox", id: 1082624744
+# mas "GIPHY CAPTURE", id: 668208984
+# mas "iHosts", id: 1102004240
+# mas "Image2icon", id: 992115977
+# mas "Install macOS Sierra", id: 1127487414
+# mas "iUnarchive", id: 418517475
+# mas "Jira", id: 1475897096
+# mas "Keynote", id: 409183694
+# mas "Kindle", id: 302584613
+# mas "LanScan", id: 472226235
+# mas "Ledger Extension", id: 1627727841
+# mas "Mactracker", id: 430255202
+# mas "Marked 2", id: 890031187
+# mas "Micro Snitch", id: 972028355
+# mas "Minesweeper Deluxe", id: 657011614
+# mas "Monosnap", id: 540348655
+# mas "Network Logger Pro", id: 764324406
+# mas "Network Speed Tester", id: 1217419133
+# mas "Numbers", id: 409203825
+# mas "OmniGraffle", id: 1142578753
+# mas "OpenIn", id: 1643649331
+# mas "Pages", id: 409201541
+# mas "Peek", id: 1554235898
+# mas "Pi-hole Remote", id: 1515445551
+# mas "Pocket", id: 568494494
+# mas "QVR Client", id: 806101067
+# mas "Reacting Live", id: 1510179491
+# mas "ReadKit", id: 588726889
+# mas "Reeder", id: 880001334
+# mas "Remote Desktop", id: 409907375
+# mas "Rules", id: 6461118886
+# mas "Save to Reader", id: 1640236961
+# mas "Server", id: 883878097
+# mas "SnipperApp 2", id: 1469182443
+# mas "Speedtest", id: 1153157709
+# mas "SSH Tunnel", id: 734418810
+# mas "Telegram", id: 747648890
+# mas "ToothFairy", id: 1191449274
+# mas "Twitter", id: 409789998
+# mas "Type2Phone", id: 472717129
+# mas "Visualizer", id: 1296177026
+# mas "Webcam Settings", id: 533696630
+# mas "WiFi Explorer", id: 494803304
+# mas "Windows App", id: 1295203466
+# mas "Wipr", id: 1320666476
+# mas "WorldCard", id: 1012314348

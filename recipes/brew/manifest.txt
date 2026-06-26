@@ -1,0 +1,13 @@
+# ==========================================================
+# BREWMASTER: BREWFILE RECIPE MANIFEST
+# Format: URL_OR_PATH|DISPLAY_NAME
+# ==========================================================
+
+# Core Roles
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/brew/dev_brewfile.txt|Software Developer Base
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/brew/wp_brewfile.txt|WordPress Developer Base
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/brew/content_brewfile.txt|Content Creator Base
+
+# Specialized Overlays
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/brew/video_brewfile.txt|Video Production Utilities
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/brew/audio_brewfile.txt|Audio Engineering Tools

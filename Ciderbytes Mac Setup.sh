@@ -76,20 +76,21 @@ PREFS_4_TARGET=${SETUP_PREFS_4_TARGET:-"$REPO_BASE_TARGET/recipes/prefs/data_pre
 # =============================================================================
 # SHELL PROFILE RECIPES
 # =============================================================================
-SHELL_CORE_TARGET=${SETUP_SHELL_CORE:-"$REPO_BASE_TARGET/recipes/shell/core_zshrc.txt"}
+SHELL_CORE_TARGET=${SETUP_SHELL_CORE:-"$REPO_BASE_TARGET/recipes/shell/core_zshrc.zsh"}
 SHELL_MANIFEST_TARGET=${SETUP_SHELL_MANIFEST:-"$REPO_BASE_TARGET/recipes/shell/manifest.txt"}
 
+# Shell Overlays Hot List
 SHELL_1_NAME=${SETUP_SHELL_1_NAME:-"Software Developer Shell"}
-SHELL_1_TARGET=${SETUP_SHELL_1_TARGET:-"$REPO_BASE_TARGET/recipes/shell/dev_zshrc.txt"}
+SHELL_1_TARGET=${SETUP_SHELL_1_TARGET:-"$REPO_BASE_TARGET/recipes/shell/dev_zshrc.zsh"}
 
 SHELL_2_NAME=${SETUP_SHELL_2_NAME:-"WordPress Developer Shell"}
-SHELL_2_TARGET=${SETUP_SHELL_2_TARGET:-"$REPO_BASE_TARGET/recipes/shell/wp_zshrc.txt"}
+SHELL_2_TARGET=${SETUP_SHELL_2_TARGET:-"$REPO_BASE_TARGET/recipes/shell/wp_zshrc.zsh"}
 
 SHELL_3_NAME=${SETUP_SHELL_3_NAME:-"Content Creator Shell"}
-SHELL_3_TARGET=${SETUP_SHELL_3_TARGET:-"$REPO_BASE_TARGET/recipes/shell/content_zshrc.txt"}
+SHELL_3_TARGET=${SETUP_SHELL_3_TARGET:-"$REPO_BASE_TARGET/recipes/shell/content_zshrc.zsh"}
 
 SHELL_4_NAME=${SETUP_SHELL_4_NAME:-"Data Scientist Shell"}
-SHELL_4_TARGET=${SETUP_SHELL_4_TARGET:-"$REPO_BASE_TARGET/recipes/shell/data_zshrc.txt"}
+SHELL_4_TARGET=${SETUP_SHELL_4_TARGET:-"$REPO_BASE_TARGET/recipes/shell/data_zshrc.zsh"}
 
 
 # =============================================================================
@@ -317,7 +318,7 @@ run_omni_selector() {
         name_3="$SHELL_3_NAME"; target_3="$SHELL_3_TARGET"
         name_4="$SHELL_4_NAME"; target_4="$SHELL_4_TARGET"
         manifest_target="$SHELL_MANIFEST_TARGET"
-        glob_pattern="*_zshrc.(txt|toml)"
+        glob_pattern="*_zshrc.(zsh|txt|toml)" # <-- Added zsh here
         core_file="core_zshrc"
         catalog_file="catalog_zshrc"
     fi
@@ -897,7 +898,7 @@ phase_shell() {
         cat >> "$ZSHRC_PATH" << EOF
 
 # Load Powerlevel10k Theme
-source "$HOMEBREW_PREFIX/opt/powerlevel10k/powerlevel10k.zsh-theme"
+source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 EOF
         echo -e "\n🎨 Fetching Powerlevel10k Theme Configuration..."
         fetch_core_with_fallback "$REPO_P10K_TARGET" "$HOME/.p10k.zsh" "Powerlevel10k Config"

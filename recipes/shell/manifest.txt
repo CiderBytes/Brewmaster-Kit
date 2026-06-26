@@ -3,6 +3,6 @@
 # Format: URL_OR_PATH|DISPLAY_NAME
 # ==========================================================
 
-https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/shell/dev_zshrc.txt|Software Developer Profile
-https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/shell/wp_zshrc.txt|WordPress Developer Profile
-https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/shell/content_zshrc.txt|Content Creator Profile
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/shell/dev_zshrc.zsh|Software Developer Profile
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/shell/wp_zshrc.zsh|WordPress Developer Profile
+https://raw.githubusercontent.com/CiderBytes/Brewmaster-Kit/master/recipes/shell/content_zshrc.zsh|Content Creator Profile

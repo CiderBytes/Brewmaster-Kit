@@ -850,7 +850,7 @@ phase_shell() {
 
     if [[ $INSTALL_P10K -eq 1 ]]; then
         echo -e "\n🎨 Installing Powerlevel10k theme via Homebrew..."
-        brew install romkatv/powerlevel10k/powerlevel10k 2>&1 | tee -a "$LOG_FILE"
+        brew install powerlevel10k 2>&1 | tee -a "$LOG_FILE"
     fi
 
     if [[ $INSTALL_PLUGINS -eq 1 ]]; then

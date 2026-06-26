@@ -899,6 +899,9 @@ phase_shell() {
 
 # Load Powerlevel10k Theme
 source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+
+# To customize prompt, run \`p10k configure\` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 EOF
         echo -e "\n🎨 Fetching Powerlevel10k Theme Configuration..."
         fetch_core_with_fallback "$REPO_P10K_TARGET" "$HOME/.p10k.zsh" "Powerlevel10k Config"
